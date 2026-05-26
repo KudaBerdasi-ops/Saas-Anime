@@ -6,7 +6,7 @@
     <title>AMII | Anime Market Intelligence Indonesia</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
@@ -26,55 +26,25 @@
             --nav-height: 80px;
             --ease: cubic-bezier(0.4, 0, 0.2, 1);
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            background-color: var(--bg-deep);
-            color: var(--text-main);
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            line-height: 1.6;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
-
+        body { background-color: var(--bg-deep); color: var(--text-main); font-family: 'Plus Jakarta Sans', sans-serif; line-height: 1.6; overflow-x: hidden; scroll-behavior: smooth; }
         .container { max-width: 1400px; margin: 0 auto; padding: 0 40px; }
 
         /* Typography */
         h1 { font-size: 72px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; }
         h2 { font-size: 32px; font-weight: 700; letter-spacing: -0.02em; }
         h3 { font-size: 20px; font-weight: 700; }
-
-        .gradient-text {
-            background: linear-gradient(135deg, #fff 30%, var(--primary-bright) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+        .gradient-text { background: linear-gradient(135deg, #fff 30%, var(--primary-bright) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
         /* Navigation */
-        nav {
-            height: var(--nav-height);
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: rgba(5, 5, 8, 0.5);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-        }
-
+        nav { height: var(--nav-height); position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(5, 5, 8, 0.5); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); display: flex; align-items: center; transition: height 0.3s var(--ease), background 0.3s var(--ease); }
         .nav-inner { width: 100%; display: flex; align-items: center; justify-content: space-between; }
-        
         .logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
         .logo-box { width: 40px; height: 40px; background: var(--primary); border-radius: 10px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
         .logo-box::after { content: ''; position: absolute; width: 100%; height: 100%; background: linear-gradient(transparent, rgba(255,255,255,0.3)); top: 0; left: 0; }
         .logo-text { font-size: 20px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
-
         .nav-links { display: flex; gap: 40px; }
-        .nav-link { font-size: 14px; font-weight: 600; color: var(--text-dim); text-decoration: none; transition: 0.3s; padding: 10px 0; position: relative; }
+        .nav-link { font-size: 14px; font-weight: 600; color: var(--text-dim); text-decoration: none; transition: 0.3s; padding: 10px 0; position: relative; cursor: pointer; }
         .nav-link:hover, .nav-link.active { color: #fff; }
         .nav-link.active::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: var(--primary); border-radius: 4px; }
 
@@ -87,19 +57,13 @@
 
         /* Hero */
         #hero { padding: 180px 0 120px; position: relative; }
-        #hero::before { 
-            content: ''; position: absolute; top: -500px; left: 30%; width: 1000px; height: 1000px; 
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 60%); 
-            filter: blur(100px); pointer-events: none;
-        }
-
+        #hero::before { content: ''; position: absolute; top: -500px; left: 30%; width: 1000px; height: 1000px; background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 60%); filter: blur(100px); pointer-events: none; }
         .hero-content { max-width: 900px; text-align: left; }
         .hero-tag { font-size: 13px; font-weight: 700; color: var(--primary-bright); text-transform: uppercase; letter-spacing: 4px; margin-bottom: 24px; display: block; }
         .hero-content p { font-size: 20px; color: var(--text-dim); margin: 32px 0 48px; max-width: 600px; }
 
         /* Dashboard View */
         .dashboard-ui { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 32px; padding: 40px; margin-top: 80px; box-shadow: 0 40px 100px -20px rgba(0,0,0,0.6); }
-
         .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 40px; }
         .kpi-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 24px; border-radius: 20px; transition: 0.3s; }
         .kpi-card:hover { border-color: var(--border-hover); background: rgba(255,255,255,0.05); }
@@ -115,14 +79,15 @@
         .table-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
         .search-box { background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 12px; padding: 10px 16px; display: flex; align-items: center; gap: 12px; width: 300px; }
         .search-box input { background: transparent; border: none; color: #fff; width: 100%; outline: none; font-size: 14px; }
-
         table { width: 100%; border-collapse: collapse; }
-        th { text-align: left; padding: 12px 16px; font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; border-bottom: 1px solid var(--border); }
+        th { text-align: left; padding: 12px 16px; font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; border-bottom: 1px solid var(--border); cursor: pointer; user-select: none; transition: color 0.2s; }
+        th:hover { color: var(--text-dim); }
+        th.sort-asc::after { content: ' ↑'; color: var(--primary-bright); }
+        th.sort-desc::after { content: ' ↓'; color: var(--primary-bright); }
         td { padding: 18px 16px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.03); }
         tr:hover td { background: rgba(255,255,255,0.01); }
-
         .sentiment-bar { height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px; width: 80px; overflow: hidden; }
-        .sentiment-fill { height: 100%; background: var(--primary); border-radius: 10px; }
+        .sentiment-fill { height: 100%; background: var(--primary); border-radius: 10px; transition: width 0.6s var(--ease); }
 
         /* Heatmap Widget */
         .heat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
@@ -130,9 +95,11 @@
         .city-box:hover, .city-box.active { border-color: var(--secondary); background: rgba(6, 182, 212, 0.1); transform: translateY(-3px); }
         .city-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
         .city-val { font-size: 20px; font-weight: 800; color: var(--secondary); }
-
         .detail-panel { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border); display: none; animation: fadeIn 0.4s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .city-top-titles { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+        .city-title-item { display: flex; justify-content: space-between; align-items: center; font-size: 12px; background: rgba(255,255,255,0.03); padding: 8px 12px; border-radius: 10px; }
+        .city-title-name { color: var(--text-dim); }
+        .city-title-score { color: var(--secondary); font-weight: 700; }
 
         /* Alerts */
         .alert-item { padding: 16px; border-radius: 16px; border: 1px solid var(--border); background: rgba(255,255,255,0.02); margin-bottom: 12px; display: flex; justify-content: space-between; align-items: start; }
@@ -154,10 +121,70 @@
         .price-features li { margin-bottom: 16px; color: var(--text-dim); font-size: 14px; display: flex; align-items: center; gap: 12px; }
         .price-features li::before { content: '✦'; color: var(--primary); }
 
+        /* API Docs Section */
+        #api-docs { padding: 100px 0; border-top: 1px solid var(--border); }
+        .api-hero { max-width: 700px; margin-bottom: 60px; }
+        .api-hero p { color: var(--text-dim); margin-top: 16px; font-size: 16px; }
+        .api-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+        .api-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 24px; padding: 32px; transition: 0.3s; }
+        .api-card:hover { border-color: var(--border-hover); }
+        .api-method { display: inline-block; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 1px; }
+        .method-get { background: rgba(16,185,129,0.15); color: var(--success); }
+        .method-post { background: rgba(139,92,246,0.15); color: var(--primary-bright); }
+        .api-endpoint { font-family: 'Courier New', monospace; font-size: 13px; color: var(--secondary); background: rgba(6,182,212,0.07); padding: 10px 14px; border-radius: 10px; margin: 12px 0; word-break: break-all; }
+        .api-desc { font-size: 13px; color: var(--text-dim); margin-top: 10px; }
+        .api-code { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin-top: 32px; }
+        .api-code pre { font-family: 'Courier New', monospace; font-size: 12px; color: #e2e8f0; overflow-x: auto; line-height: 1.8; }
+        .api-code .key { color: var(--primary-bright); }
+        .api-code .val { color: var(--secondary); }
+        .api-code .str { color: #86efac; }
+        .code-label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+
+        /* Modal */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 24px; }
+        .modal-overlay.open { display: flex; animation: fadeIn 0.25s ease; }
+        .modal-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: 28px; padding: 48px; max-width: 520px; width: 100%; position: relative; }
+        .modal-close { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.07); border: none; color: var(--text-dim); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .modal-close:hover { background: rgba(255,255,255,0.12); color: #fff; }
+        .modal-tag { font-size: 12px; font-weight: 700; color: var(--primary-bright); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 12px; display: block; }
+        .modal-title { font-size: 26px; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 8px; }
+        .modal-sub { font-size: 14px; color: var(--text-dim); margin-bottom: 32px; }
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; font-size: 12px; font-weight: 700; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+        .form-input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; color: #fff; font-size: 14px; outline: none; transition: 0.3s; font-family: inherit; }
+        .form-input:focus { border-color: var(--primary); background: rgba(139,92,246,0.07); }
+        .form-input::placeholder { color: var(--text-muted); }
+        .form-select { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; color: #fff; font-size: 14px; outline: none; transition: 0.3s; font-family: inherit; cursor: pointer; appearance: none; }
+        .form-select:focus { border-color: var(--primary); }
+        .form-select option { background: var(--bg-card); }
+        .form-submit { width: 100%; padding: 16px; border-radius: 14px; font-weight: 700; font-size: 15px; cursor: pointer; border: none; background: var(--primary); color: #fff; margin-top: 8px; transition: 0.3s; }
+        .form-submit:hover { background: var(--primary-bright); transform: translateY(-2px); }
+        .form-note { font-size: 12px; color: var(--text-muted); text-align: center; margin-top: 16px; }
+
+        /* Toast */
+        .toast { position: fixed; bottom: 32px; right: 32px; background: var(--bg-card); border: 1px solid var(--success); border-radius: 16px; padding: 18px 24px; z-index: 3000; display: none; align-items: center; gap: 12px; font-size: 14px; font-weight: 600; box-shadow: 0 8px 30px rgba(0,0,0,0.4); animation: slideUp 0.4s var(--ease); }
+        .toast.show { display: flex; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .toast-icon { width: 28px; height: 28px; background: rgba(16,185,129,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--success); font-size: 14px; }
+
+        /* Scroll Reveal */
+        .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+
         /* Progress Dots for engine */
         .engine-pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--success); position: relative; }
         .engine-pulse::after { content: ''; position: absolute; width: 100%; height: 100%; background: inherit; border-radius: inherit; animation: pulse 2s infinite; }
         @keyframes pulse { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(3); opacity: 0; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Loader */
+        .api-loader { display: inline-block; width: 18px; height: 18px; border: 2px solid var(--primary); border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 8px; }
+        .live-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: var(--success); background: rgba(16,185,129,0.1); padding: 4px 10px; border-radius: 100px; }
+        .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); animation: pulse 2s infinite; }
 
         /* Footer */
         footer { padding: 80px 0; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 14px; text-align: center; }
@@ -168,14 +195,59 @@
             .kpi-row { grid-template-columns: repeat(2, 1fr); }
             .content-grid { grid-template-columns: 1fr; }
             .nav-links { display: none; }
+            .api-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
+    <!-- ========== MODAL ========== -->
+    <div class="modal-overlay" id="modal" onclick="handleModalOverlayClick(event)">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <span class="modal-tag" id="modal-tag">Get Access</span>
+            <h3 class="modal-title" id="modal-title">Join Waitlist</h3>
+            <p class="modal-sub" id="modal-sub">Be the first to know when AMII.AI launches.</p>
+            <div class="form-group">
+                <label>Full Name</label>
+                <input class="form-input" id="form-name" type="text" placeholder="e.g. Budi Santoso">
+            </div>
+            <div class="form-group">
+                <label>Business Email</label>
+                <input class="form-input" id="form-email" type="email" placeholder="budi@perusahaan.co.id">
+            </div>
+            <div class="form-group" id="form-company-group">
+                <label>Company / Toko</label>
+                <input class="form-input" id="form-company" type="text" placeholder="e.g. Anime Nusantara Store">
+            </div>
+            <div class="form-group" id="form-plan-group">
+                <label>Plan Interest</label>
+                <select class="form-select" id="form-plan">
+                    <option value="">Pilih plan...</option>
+                    <option value="explorer">Solo Explorer (Gratis)</option>
+                    <option value="pro">Market Pro (Rp500k/mo)</option>
+                    <option value="enterprise">Enterprise Custom</option>
+                </select>
+            </div>
+            <div class="form-group" id="form-msg-group" style="display:none;">
+                <label>Pesan</label>
+                <textarea class="form-input" id="form-msg" rows="3" placeholder="Ceritakan kebutuhan bisnis kamu..."></textarea>
+            </div>
+            <button class="form-submit" id="form-submit-btn" onclick="submitForm()">Kirim →</button>
+            <p class="form-note">Data kamu aman. Tidak ada spam.</p>
+        </div>
+    </div>
+
+    <!-- ========== TOAST ========== -->
+    <div class="toast" id="toast">
+        <div class="toast-icon">✓</div>
+        <span id="toast-msg">Berhasil dikirim! Kami akan segera menghubungi kamu.</span>
+    </div>
+
+    <!-- ========== NAV ========== -->
     <nav id="navbar">
         <div class="container nav-inner">
-            <a href="#" class="logo">
+            <a href="#hero" class="logo">
                 <div class="logo-box">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -186,82 +258,86 @@
                 <div class="logo-text">AMII<span style="color: var(--primary-bright)">.AI</span></div>
             </a>
             <div class="nav-links">
-                <a href="#hero" class="nav-link active">Overview</a>
-                <a href="#dashboard" class="nav-link">Intelligence</a>
-                <a href="#pricing" class="nav-link">Pricing</a>
-                <a href="#" class="nav-link">API Docs</a>
+                <a href="#hero" class="nav-link" data-section="hero">Overview</a>
+                <a href="#dashboard" class="nav-link" data-section="dashboard">Intelligence</a>
+                <a href="#pricing" class="nav-link" data-section="pricing">Pricing</a>
+                <a href="#api-docs" class="nav-link" data-section="api-docs">API Docs</a>
             </div>
             <div class="nav-actions">
-                <a href="#pricing" class="btn btn-primary">Try Demo</a>
+                <button class="btn btn-primary" onclick="openModal('demo')">Try Demo</button>
             </div>
         </div>
     </nav>
 
+    <!-- ========== HERO ========== -->
     <section id="hero">
         <div class="container">
             <div class="hero-content">
                 <span class="hero-tag">B2B Vertical Analytics</span>
                 <h1>Precision <span class="gradient-text">Anime Insights</span> for the Indonesia Market</h1>
-                <p>The only real-time SaaS platform deliverings structured trend reports, city-level demand mapping, and early breakout detection for the ID market.</p>
-                <div class="btn-group">
+                <p>The only real-time SaaS platform delivering structured trend reports, city-level demand mapping, and early breakout detection for the ID market.</p>
+                <div class="btn-group" style="display:flex;gap:16px;flex-wrap:wrap;">
                     <a href="#dashboard" class="btn btn-primary">Enter Dashboard</a>
-                    <a href="#" class="btn btn-outline">Schedule Sales Call</a>
+                    <button class="btn btn-outline" onclick="openModal('sales')">Schedule Sales Call</button>
                 </div>
             </div>
 
+            <!-- ========== DASHBOARD ========== -->
             <div class="dashboard-ui" id="dashboard">
                 <div class="kpi-row">
-                    <div class="kpi-card">
+                    <div class="kpi-card reveal">
                         <div class="kpi-label">Market Conversations</div>
-                        <div class="kpi-value">4.2M</div>
-                        <div class="kpi-trend">↑ 12.4% vs LW</div>
+                        <div class="kpi-value" id="kpi-conversations">—</div>
+                        <div class="kpi-trend" id="kpi-conversations-sub">Loading...</div>
                     </div>
-                    <div class="kpi-card">
+                    <div class="kpi-card reveal reveal-delay-1">
                         <div class="kpi-label">Consumer Sentiment</div>
-                        <div class="kpi-value">84.2%</div>
-                        <div class="kpi-trend">↑ 2.1% Positive</div>
+                        <div class="kpi-value" id="kpi-sentiment">—</div>
+                        <div class="kpi-trend" id="kpi-sentiment-sub">Loading...</div>
                     </div>
-                    <div class="kpi-card">
+                    <div class="kpi-card reveal reveal-delay-2">
                         <div class="kpi-label">Breakout Signals</div>
-                        <div class="kpi-value">12</div>
-                        <div class="kpi-trend">↑ 4 Detected Today</div>
+                        <div class="kpi-value" id="kpi-breakouts">—</div>
+                        <div class="kpi-trend" id="kpi-breakouts-sub">Loading...</div>
                     </div>
-                    <div class="kpi-card">
-                        <div class="kpi-label">System Uptime</div>
-                        <div class="kpi-value">99.9%</div>
-                        <div class="kpi-trend" style="color: var(--text-dim)">Operational</div>
+                    <div class="kpi-card reveal reveal-delay-3">
+                        <div class="kpi-label">Data Source</div>
+                        <div class="kpi-value" style="font-size: 18px;" id="kpi-source">AniList</div>
+                        <div class="kpi-trend" id="kpi-lastsync" style="color: var(--text-dim)">Syncing...</div>
                     </div>
                 </div>
 
                 <div class="content-grid">
                     <div class="left-col">
-                        <div class="section-card">
+                        <div class="section-card reveal">
                             <div class="table-header">
-                                <h3>Trending Titles Index</h3>
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <h3>Trending Titles Index</h3>
+                                    <span class="live-badge"><span class="live-dot"></span>LIVE</span>
+                                </div>
                                 <div class="search-box">
-                                    <input type="text" id="animeSearch" placeholder="Filter titles..." onkeyup="filterTable()">
+                                    <input type="text" id="animeSearch" placeholder="Filter titles..." oninput="filterTable()">
                                 </div>
                             </div>
                             <div style="overflow-x: auto;">
                                 <table id="animeTable">
                                     <thead>
                                         <tr>
-                                            <th>Rank</th>
-                                            <th>Anime Title</th>
-                                            <th>Volume</th>
-                                            <th>Sentiment</th>
-                                            <th>Movement</th>
+                                            <th onclick="sortTable('rank')">Rank</th>
+                                            <th onclick="sortTable('title')">Anime Title</th>
+                                            <th onclick="sortTable('volume')">Popularity</th>
+                                            <th onclick="sortTable('sentiment')">Score</th>
+                                            <th onclick="sortTable('movement')">Trend</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="animeBody">
-                                        <!-- Dynamic rows -->
-                                    </tbody>
+                                    <tbody id="animeBody"></tbody>
                                 </table>
                             </div>
                         </div>
 
-                        <div class="section-card">
+                        <div class="section-card reveal">
                             <h3>Genre Growth Matrix</h3>
+                            <p style="font-size:12px;color:var(--text-dim);margin-top:6px;">Genre distribution dari judul trending saat ini.</p>
                             <div style="height: 300px; margin-top: 24px;">
                                 <canvas id="genreChart"></canvas>
                             </div>
@@ -269,31 +345,28 @@
                     </div>
 
                     <div class="right-col">
-                        <div class="section-card">
+                        <div class="section-card reveal">
                             <h3>Regional Hype Map</h3>
-                            <p style="font-size: 12px; margin: 12px 0 20px;">City-level demand signals.</p>
-                            <div class="heat-grid" id="cityList">
-                                <!-- Dynamic cities -->
-                            </div>
+                            <p style="font-size: 12px; margin: 12px 0 20px; color:var(--text-dim);">Klik kota untuk lihat detail & judul populer.</p>
+                            <div class="heat-grid" id="cityList"></div>
                             <div class="detail-panel" id="cityDetail">
-                                <h4 id="cityName" style="color: var(--secondary)">Jakarta</h4>
-                                <p id="cityInfo" style="font-size: 13px; margin-top: 8px;">High concentration of shonen fans. Recommended for pop-up activations.</p>
+                                <h4 id="cityName" style="color: var(--secondary)"></h4>
+                                <p id="cityInfo" style="font-size: 13px; margin-top: 8px; color:var(--text-dim);"></p>
+                                <div class="city-top-titles" id="cityTopTitles"></div>
                             </div>
                         </div>
 
-                        <div class="section-card">
+                        <div class="section-card reveal">
                             <h3>Trend Pulse Alerts</h3>
-                            <div id="alertsList" style="margin-top: 20px;">
-                                <!-- Dynamic alerts -->
-                            </div>
+                            <div id="alertsList" style="margin-top: 20px;"></div>
                         </div>
 
-                        <div class="section-card" style="background: rgba(16, 185, 129, 0.05); border-color: var(--success)">
+                        <div class="section-card reveal" style="background: rgba(16, 185, 129, 0.05); border-color: var(--success)">
                             <div style="display: flex; align-items: center; gap: 12px;">
                                 <div class="engine-pulse"></div>
-                                <h3 style="font-size: 14px;">Data Scraping Engine Active</h3>
+                                <h3 style="font-size: 14px;">AniList API Engine Active</h3>
                             </div>
-                            <p style="font-size: 12px; margin-top: 8px;">Last sync completed 2.4s ago. 842k objects processed today.</p>
+                            <p id="engine-status" style="font-size: 12px; margin-top: 8px;">Connecting to AniList API...</p>
                         </div>
                     </div>
                 </div>
@@ -301,12 +374,13 @@
         </div>
     </section>
 
+    <!-- ========== PRICING ========== -->
     <section id="pricing" class="pricing-section">
         <div class="container">
-            <h2>Scalable intelligence packages</h2>
-            <p>From solo merchants to regional agencies.</p>
+            <h2 class="reveal">Scalable intelligence packages</h2>
+            <p class="reveal" style="color:var(--text-dim);margin-top:12px;">From solo merchants to regional agencies.</p>
             <div class="pricing-grid">
-                <div class="price-card">
+                <div class="price-card reveal">
                     <h4>Solo Explorer</h4>
                     <div class="price-amt">Rp0<span>/mo</span></div>
                     <ul class="price-features">
@@ -315,9 +389,9 @@
                         <li>24h Delayed Data</li>
                         <li>Single Hub Access</li>
                     </ul>
-                    <a href="#" class="btn btn-outline" style="width: 100%; justify-content: center;">Get Started</a>
+                    <button class="btn btn-outline" style="width: 100%; justify-content: center;" onclick="openModal('explorer')">Get Started</button>
                 </div>
-                <div class="price-card popular">
+                <div class="price-card popular reveal reveal-delay-1">
                     <span class="popular-tag">Most Popular</span>
                     <h4>Market Pro</h4>
                     <div class="price-amt">Rp500k<span>/mo</span></div>
@@ -327,9 +401,9 @@
                         <li>Early Trend Alert Suite</li>
                         <li>PDF Report Exports</li>
                     </ul>
-                    <a href="#" class="btn btn-primary" style="width: 100%; justify-content: center;">Start Pro Trial</a>
+                    <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="openModal('pro')">Start Pro Trial</button>
                 </div>
-                <div class="price-card">
+                <div class="price-card reveal reveal-delay-2">
                     <h4>Enterprise Custom</h4>
                     <div class="price-amt">Contact</div>
                     <ul class="price-features">
@@ -338,161 +412,495 @@
                         <li>Historical Sentiment Logs</li>
                         <li>Account Strategy Support</li>
                     </ul>
-                    <a href="#" class="btn btn-outline" style="width: 100%; justify-content: center;">Contact Sales</a>
+                    <button class="btn btn-outline" style="width: 100%; justify-content: center;" onclick="openModal('enterprise')">Contact Sales</button>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- ========== API DOCS ========== -->
+    <section id="api-docs">
+        <div class="container">
+            <div class="api-hero reveal">
+                <h2>API Documentation</h2>
+                <p>Integrasikan data anime intelligence langsung ke sistem kamu. REST API dengan response JSON standar.</p>
+            </div>
+            <div class="api-grid">
+                <div>
+                    <div class="api-card reveal">
+                        <span class="api-method method-get">GET</span>
+                        <div style="font-weight:700;font-size:15px;">Trending Titles</div>
+                        <div class="api-endpoint">https://api.amii.ai/v1/trending?limit=10&amp;region=ID</div>
+                        <div class="api-desc">Mengembalikan daftar anime trending di Indonesia berdasarkan volume percakapan real-time, sentiment score, dan movement signal.</div>
+                    </div>
+                    <div class="api-card reveal" style="margin-top:16px;">
+                        <span class="api-method method-get">GET</span>
+                        <div style="font-weight:700;font-size:15px;">Regional Hype Score</div>
+                        <div class="api-endpoint">https://api.amii.ai/v1/regional?city=jakarta</div>
+                        <div class="api-desc">City-level demand index per judul. Mendukung: Jakarta, Bandung, Surabaya, Yogyakarta, Medan, Makassar.</div>
+                    </div>
+                    <div class="api-card reveal" style="margin-top:16px;">
+                        <span class="api-method method-post">POST</span>
+                        <div style="font-weight:700;font-size:15px;">Breakout Alert Webhook</div>
+                        <div class="api-endpoint">https://api.amii.ai/v1/webhooks/alerts</div>
+                        <div class="api-desc">Daftarkan endpoint kamu untuk menerima push notification saat judul baru masuk threshold breakout.</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="api-code reveal">
+                        <div class="code-label">Contoh Response — GET /v1/trending</div>
+                        <pre id="api-code-preview">Loading live data...</pre>
+                    </div>
+                    <div style="margin-top:16px;">
+                        <button class="btn btn-outline" style="width:100%;justify-content:center;" onclick="openModal('api')">
+                            Request API Key →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
     <footer>
         <div class="container">
-            <p>&copy; 2024 Anime Market Insight Indonesia. The first Indonesian B2B vertical intelligence platform.</p>
-            <p style="margin-top: 12px; font-size: 12px; color: var(--text-muted)">Powered by local linguistic AI models for precise ID-slang detection.</p>
+            <p>&copy; <span id="footer-year"></span> Anime Market Insight Indonesia. The first Indonesian B2B vertical intelligence platform.</p>
+            <p style="margin-top: 12px; font-size: 12px; color: var(--text-muted)">Powered by AniList API · Built for the Indonesia anime market</p>
         </div>
     </footer>
 
     <script>
-        const ANIME_DATA = [
-            { title: "Oshi no Ko S2", volume: "1.2M", sentiment: 88, movement: "▲" },
-            { title: "Monster #8", volume: "950K", sentiment: 82, movement: "▲" },
-            { title: "Demon Slayer: Training", volume: "880K", sentiment: 94, movement: "▼" },
-            { title: "Mushoku Tensei II", volume: "720K", sentiment: 75, movement: "▲" },
-            { title: "Blue Lock Movie", volume: "680K", sentiment: 85, movement: "▲" },
-            { title: "Wind Breaker", volume: "540K", sentiment: 81, movement: "▲" },
-            { title: "Solo Leveling", volume: "510K", sentiment: 89, movement: "▼" },
-            { title: "Frieren", volume: "490K", sentiment: 96, movement: "▼" }
-        ];
+    // =============================================
+    // AMII.AI — Full Live Engine
+    // =============================================
 
-        const CITIES = [
-            { name: "Jakarta", val: 98, info: "Hub for premium limited merch. Highest fan spending power detected." },
-            { name: "Bandung", val: 85, info: "Art-focused demographic. High interest in creative collaborations." },
-            { name: "Surabaya", val: 78, info: "Strong battle-shonen core. Excellent for gaming cross-promotion." },
-            { name: "Yogyakarta", val: 92, info: "Very high organic community engagement. Ideal for fan-events." },
-            { name: "Medan", val: 62, info: "Mainstream shonen focus. Emerging market for retail chain entries." },
-            { name: "Makassar", val: 58, info: "Stable growth. Focus on established mainstream hits." }
-        ];
+    const REFRESH_INTERVAL = 5 * 60 * 1000;
+    let currentAnimeData = [];
+    let genreChartInstance = null;
+    let sortState = { col: 'rank', dir: 'asc' };
 
-        const ALERTS = [
-            { title: "Dandadan", status: "high", msg: "Visual assets causing high X activity." },
-            { title: "Look Back Movie", status: "rising", msg: "Pre-order momentum in Jakarta IMAX." },
-            { title: "Sakamoto Days", status: "rising", msg: "Adaptation leaks sparking ID search." }
-        ];
+    const FALLBACK_ANIME = [
+        { title: "Oshi no Ko S2",         volume: 1200000, sentiment: 88, movement: "▲", genres: ["Drama","Music"], trending: 1800 },
+        { title: "Monster #8",             volume: 950000,  sentiment: 82, movement: "▲", genres: ["Action","Sci-Fi"], trending: 1600 },
+        { title: "Demon Slayer: Training", volume: 880000,  sentiment: 94, movement: "▼", genres: ["Action","Fantasy"], trending: 1400 },
+        { title: "Mushoku Tensei II",      volume: 720000,  sentiment: 75, movement: "▲", genres: ["Isekai","Fantasy"], trending: 1200 },
+        { title: "Blue Lock Movie",        volume: 680000,  sentiment: 85, movement: "▲", genres: ["Sports","Action"], trending: 1100 },
+        { title: "Wind Breaker",           volume: 540000,  sentiment: 81, movement: "▲", genres: ["Action","Sports"], trending: 900 },
+        { title: "Solo Leveling",          volume: 510000,  sentiment: 89, movement: "▼", genres: ["Action","Fantasy"], trending: 800 },
+        { title: "Frieren",                volume: 490000,  sentiment: 96, movement: "▼", genres: ["Fantasy","Adventure"], trending: 750 }
+    ];
 
-        function init() {
-            renderTable(ANIME_DATA);
-            renderCities();
-            renderAlerts();
-            initChart();
-            
-            // Scroll effects
-            window.addEventListener('scroll', () => {
-                const nav = document.getElementById('navbar');
-                if (window.scrollY > 50) {
-                    nav.style.background = "rgba(5, 5, 8, 0.9)";
-                    nav.style.height = "70px";
-                } else {
-                    nav.style.background = "rgba(5, 5, 8, 0.5)";
-                    nav.style.height = "80px";
+    const CITIES = [
+        { name: "Jakarta",    val: 98, info: "Hub untuk merch premium & limited edition. Fan spending power tertinggi di Indonesia.", weight: 1.0 },
+        { name: "Bandung",    val: 85, info: "Demografi art-focused. Minat tinggi pada kolaborasi kreatif & fanart.", weight: 0.87 },
+        { name: "Surabaya",   val: 78, info: "Core battle-shonen yang kuat. Cocok untuk cross-promotion gaming.", weight: 0.80 },
+        { name: "Yogyakarta", val: 92, info: "Community engagement organik sangat tinggi. Ideal untuk fan-event & pop-up.", weight: 0.94 },
+        { name: "Medan",      val: 62, info: "Fokus mainstream shonen. Pasar emerging untuk retail chain.", weight: 0.63 },
+        { name: "Makassar",   val: 58, info: "Pertumbuhan stabil. Fokus pada judul mainstream yang sudah establish.", weight: 0.59 }
+    ];
+
+    // =============================================
+    // HELPERS
+    // =============================================
+    function formatVolume(num) {
+        if (!num) return '—';
+        if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+        if (num >= 1000)    return Math.round(num / 1000) + 'K';
+        return String(num);
+    }
+    function timeNow() {
+        return new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    }
+
+    // =============================================
+    // ANILIST API
+    // =============================================
+    async function fetchAniListTrending() {
+        const query = `{
+            Page(page: 1, perPage: 10) {
+                media(sort: TRENDING_DESC, type: ANIME, status: RELEASING) {
+                    id title { romaji english } trending popularity averageScore genres
                 }
-            });
-        }
+            }
+        }`;
+        const res = await fetch('https://graphql.anilist.co', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query })
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const json = await res.json();
+        if (json.errors) throw new Error(json.errors[0].message);
+        return json.data.Page.media;
+    }
 
-        function renderTable(data) {
-            const body = document.getElementById('animeBody');
-            body.innerHTML = '';
-            data.forEach((item, index) => {
-                body.innerHTML += `
-                    <tr>
-                        <td style="color: var(--text-dim); font-weight: 700;">#${index + 1}</td>
-                        <td style="font-weight: 700;">${item.title}</td>
-                        <td style="color: var(--secondary); font-weight: 700;">${item.volume}</td>
-                        <td>
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <div class="sentiment-bar">
-                                    <div class="sentiment-fill" style="width: ${item.sentiment}%"></div>
-                                </div>
-                                <span style="font-size: 11px; font-weight: 700;">${item.sentiment}%</span>
-                            </div>
-                        </td>
-                        <td style="color: ${item.movement === '▲' ? 'var(--success)' : '#ef4444'}; font-weight: 800;">${item.movement}</td>
-                    </tr>
-                `;
-            });
-        }
+    function mapToAnimeData(media) {
+        const avgTrending = media.reduce((s, m) => s + (m.trending || 0), 0) / media.length;
+        return media.map(item => ({
+            title:    item.title.romaji || item.title.english || 'Unknown',
+            volume:   item.popularity || 0,
+            sentiment: item.averageScore || 75,
+            movement: (item.trending || 0) >= avgTrending ? '▲' : '▼',
+            genres:   item.genres || [],
+            trending: item.trending || 0
+        }));
+    }
 
-        function filterTable() {
-            const query = document.getElementById('animeSearch').value.toLowerCase();
-            const filtered = ANIME_DATA.filter(a => a.title.toLowerCase().includes(query));
-            renderTable(filtered);
-        }
+    function computeKPIs(data) {
+        const totalPop = data.reduce((s, m) => s + (m.volume || 0), 0);
+        const avgScore = (data.reduce((s, m) => s + (m.sentiment || 0), 0) / data.length).toFixed(1);
+        const breakouts = data.filter(m => m.trending > 500).length;
+        return { totalPop, avgScore, breakouts };
+    }
 
-        function renderCities() {
-            const list = document.getElementById('cityList');
-            CITIES.forEach(city => {
-                const div = document.createElement('div');
-                div.className = 'city-box';
-                div.innerHTML = `
-                    <div class="city-name">${city.name}</div>
-                    <div class="city-val">${city.val}</div>
-                `;
-                div.onclick = () => {
-                    document.querySelectorAll('.city-box').forEach(b => b.classList.remove('active'));
-                    div.classList.add('active');
-                    showCityDetail(city);
-                };
-                list.appendChild(div);
-            });
-        }
+    function computeGenreData(data) {
+        const counts = {};
+        data.forEach(item => {
+            (item.genres || []).forEach(g => { counts[g] = (counts[g] || 0) + 1; });
+        });
+        const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 6);
+        return { labels: sorted.map(e => e[0]), values: sorted.map(e => e[1] * 18) };
+    }
 
-        function showCityDetail(city) {
-            const panel = document.getElementById('cityDetail');
-            panel.style.display = 'block';
-            document.getElementById('cityName').innerText = city.name + " (" + city.val + ")";
-            document.getElementById('cityInfo').innerText = city.info;
-        }
+    function computeAlerts(data) {
+        return [...data].sort((a, b) => b.trending - a.trending).slice(0, 3).map((item, i) => ({
+            title:  item.title,
+            status: i === 0 ? 'high' : 'rising',
+            msg:    `Trending score: ${(item.trending || 0).toLocaleString('id-ID')}. Genre: ${(item.genres || ['—'])[0]}.`
+        }));
+    }
 
-        function renderAlerts() {
-            const list = document.getElementById('alertsList');
-            ALERTS.forEach(a => {
-                list.innerHTML += `
-                    <div class="alert-item">
-                        <div>
-                            <div style="font-weight: 700; font-size: 13px;">${a.title}</div>
-                            <div style="font-size: 11px; color: var(--text-dim); margin-top: 4px;">${a.msg}</div>
+    // =============================================
+    // RENDER
+    // =============================================
+    function updateKPIs(kpis) {
+        const set = (id, val) => { const el = document.getElementById(id); if (el) el.innerHTML = val; };
+        set('kpi-conversations', formatVolume(kpis.totalPop));
+        set('kpi-sentiment', kpis.avgScore + '%');
+        set('kpi-breakouts', kpis.breakouts);
+        set('kpi-conversations-sub', '<span style="color:var(--success)">↑ Total popularity score</span>');
+        set('kpi-sentiment-sub', '<span style="color:var(--success)">↑ Avg. score airing titles</span>');
+        set('kpi-breakouts-sub', '<span style="color:var(--success)">↑ Trending score > 500</span>');
+        set('kpi-lastsync', `Synced: ${timeNow()}`);
+    }
+
+    function renderTable(data) {
+        const body = document.getElementById('animeBody');
+        body.innerHTML = '';
+        data.forEach((item, index) => {
+            body.innerHTML += `
+                <tr>
+                    <td style="color:var(--text-dim);font-weight:700;">#${index+1}</td>
+                    <td style="font-weight:700;">${item.title}</td>
+                    <td style="color:var(--secondary);font-weight:700;">${formatVolume(item.volume)}</td>
+                    <td>
+                        <div style="display:flex;align-items:center;gap:10px;">
+                            <div class="sentiment-bar"><div class="sentiment-fill" style="width:${item.sentiment}%"></div></div>
+                            <span style="font-size:11px;font-weight:700;">${item.sentiment}%</span>
                         </div>
-                        <span class="${a.status === 'high' ? 'alert-high' : 'alert-rising'}">${a.status}</span>
-                    </div>
-                `;
-            });
-        }
+                    </td>
+                    <td style="color:${item.movement==='▲'?'var(--success)':'#ef4444'};font-weight:800;">${item.movement}</td>
+                </tr>`;
+        });
+    }
 
-        function initChart() {
-            const ctx = document.getElementById('genreChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Action', 'Isekai', 'Romance', 'Fantasy', 'Sports', 'Slice of Life'],
-                    datasets: [{
-                        label: 'Growth Score',
-                        data: [45, 88, 32, 64, 21, 55],
-                        backgroundColor: '#8b5cf6',
-                        borderRadius: 8,
-                        barThickness: 20
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#64748b' } },
-                        x: { grid: { display: false }, ticks: { color: '#64748b' } }
-                    }
+    function filterTable() {
+        const q = document.getElementById('animeSearch').value.toLowerCase();
+        renderTable(currentAnimeData.filter(a => a.title.toLowerCase().includes(q)));
+    }
+
+    // Table Sort
+    function sortTable(col) {
+        if (sortState.col === col) {
+            sortState.dir = sortState.dir === 'asc' ? 'desc' : 'asc';
+        } else {
+            sortState.col = col; sortState.dir = 'asc';
+        }
+        document.querySelectorAll('#animeTable th').forEach(th => {
+            th.classList.remove('sort-asc', 'sort-desc');
+        });
+        const thMap = { rank: 0, title: 1, volume: 2, sentiment: 3, movement: 4 };
+        const thIdx = thMap[col];
+        if (thIdx !== undefined) {
+            const ths = document.querySelectorAll('#animeTable th');
+            ths[thIdx].classList.add(sortState.dir === 'asc' ? 'sort-asc' : 'sort-desc');
+        }
+        const sorted = [...currentAnimeData].sort((a, b) => {
+            let va = a[col], vb = b[col];
+            if (col === 'rank') { va = currentAnimeData.indexOf(a); vb = currentAnimeData.indexOf(b); }
+            if (col === 'title') { va = va.toLowerCase(); vb = vb.toLowerCase(); }
+            if (va < vb) return sortState.dir === 'asc' ? -1 : 1;
+            if (va > vb) return sortState.dir === 'asc' ? 1 : -1;
+            return 0;
+        });
+        renderTable(sorted);
+    }
+
+    function renderCities() {
+        const list = document.getElementById('cityList');
+        list.innerHTML = '';
+        CITIES.forEach(city => {
+            const div = document.createElement('div');
+            div.className = 'city-box';
+            div.innerHTML = `<div class="city-name">${city.name}</div><div class="city-val">${city.val}</div>`;
+            div.onclick = () => {
+                document.querySelectorAll('.city-box').forEach(b => b.classList.remove('active'));
+                div.classList.add('active');
+                showCityDetail(city);
+            };
+            list.appendChild(div);
+        });
+    }
+
+    function showCityDetail(city) {
+        const panel = document.getElementById('cityDetail');
+        panel.style.display = 'block';
+        document.getElementById('cityName').innerText = `${city.name} — Hype Index: ${city.val}`;
+        document.getElementById('cityInfo').innerText = city.info;
+
+        // Show top 3 titles weighted by city affinity
+        const topTitles = document.getElementById('cityTopTitles');
+        if (currentAnimeData.length > 0) {
+            const weighted = [...currentAnimeData]
+                .map(a => ({ ...a, cityScore: Math.round(a.sentiment * city.weight) }))
+                .sort((a, b) => b.cityScore - a.cityScore)
+                .slice(0, 3);
+            topTitles.innerHTML = `<div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Top judul di kota ini</div>` +
+                weighted.map(a => `
+                    <div class="city-title-item">
+                        <span class="city-title-name">${a.title}</span>
+                        <span class="city-title-score">${a.cityScore}%</span>
+                    </div>`).join('');
+        } else {
+            topTitles.innerHTML = '';
+        }
+    }
+
+    function renderAlerts(alerts) {
+        const list = document.getElementById('alertsList');
+        list.innerHTML = alerts.map(a => `
+            <div class="alert-item">
+                <div>
+                    <div style="font-weight:700;font-size:13px;">${a.title}</div>
+                    <div style="font-size:11px;color:var(--text-dim);margin-top:4px;">${a.msg}</div>
+                </div>
+                <span class="${a.status==='high'?'alert-high':'alert-rising'}">${a.status}</span>
+            </div>`).join('');
+    }
+
+    function renderGenreChart(genreData) {
+        const ctx = document.getElementById('genreChart').getContext('2d');
+        if (genreChartInstance) genreChartInstance.destroy();
+        genreChartInstance = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: genreData.labels,
+                datasets: [{
+                    label: 'Genre Score', data: genreData.values,
+                    backgroundColor: genreData.labels.map((_, i) => i === 0 ? '#8b5cf6' : 'rgba(139,92,246,0.4)'),
+                    borderRadius: 8, barThickness: 20
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` Count: ${Math.round(ctx.raw/18)}` } } },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#64748b' } },
+                    x: { grid: { display: false }, ticks: { color: '#64748b', maxRotation: 30 } }
+                }
+            }
+        });
+    }
+
+    function updateApiCodePreview(data) {
+        const sample = data.slice(0, 3);
+        const lines = [
+            `{`,
+            `  <span class="key">"status"</span>: <span class="str">"ok"</span>,`,
+            `  <span class="key">"region"</span>: <span class="str">"ID"</span>,`,
+            `  <span class="key">"synced_at"</span>: <span class="str">"${new Date().toISOString()}"</span>,`,
+            `  <span class="key">"data"</span>: [`,
+            ...sample.map((a, i) => {
+                const comma = i < sample.length - 1 ? ',' : '';
+                return [
+                    `    {`,
+                    `      <span class="key">"title"</span>: <span class="str">"${a.title}"</span>,`,
+                    `      <span class="key">"popularity"</span>: <span class="val">${a.volume}</span>,`,
+                    `      <span class="key">"score"</span>: <span class="val">${a.sentiment}</span>,`,
+                    `      <span class="key">"trend"</span>: <span class="str">"${a.movement === '▲' ? 'UP' : 'DOWN'}"</span>`,
+                    `    }${comma}`
+                ].join('\n');
+            }),
+            `  ]`,
+            `}`
+        ];
+        const el = document.getElementById('api-code-preview');
+        if (el) el.innerHTML = lines.join('\n');
+    }
+
+    function setLoadingState(loading) {
+        if (!loading) return;
+        document.getElementById('animeBody').innerHTML = `
+            <tr><td colspan="5" style="text-align:center;padding:48px;color:var(--text-dim);">
+                <div class="api-loader"></div>
+                <span style="font-size:13px;">Fetching live data dari AniList...</span>
+            </td></tr>`;
+    }
+
+    function updateEngineStatus(success, errMsg) {
+        const el = document.getElementById('engine-status');
+        if (!el) return;
+        el.innerHTML = success
+            ? `Sync selesai pukul <strong>${timeNow()}</strong>. Sumber: AniList GraphQL API. Auto-refresh setiap 5 menit.`
+            : `<span style="color:#ef4444;">⚠ API error: ${errMsg}. Menampilkan fallback data.</span>`;
+    }
+
+    // =============================================
+    // MAIN REFRESH
+    // =============================================
+    async function refreshData() {
+        setLoadingState(true);
+        try {
+            const media = await fetchAniListTrending();
+            currentAnimeData = mapToAnimeData(media);
+            const kpis = computeKPIs(currentAnimeData);
+            renderTable(currentAnimeData);
+            updateKPIs(kpis);
+            renderAlerts(computeAlerts(currentAnimeData));
+            renderGenreChart(computeGenreData(currentAnimeData));
+            updateApiCodePreview(currentAnimeData);
+            updateEngineStatus(true);
+        } catch (err) {
+            console.error('[AMII] API Error:', err.message);
+            currentAnimeData = FALLBACK_ANIME;
+            renderTable(FALLBACK_ANIME);
+            renderAlerts(computeAlerts(FALLBACK_ANIME));
+            renderGenreChart(computeGenreData(FALLBACK_ANIME));
+            updateApiCodePreview(FALLBACK_ANIME);
+            updateEngineStatus(false, err.message);
+        }
+    }
+
+    // =============================================
+    // MODAL
+    // =============================================
+    const MODAL_CONFIGS = {
+        demo:       { tag: 'Try Demo', title: 'Coba Dashboard AMII', sub: 'Daftar dan akses demo gratis sekarang.', plan: 'explorer', showMsg: false },
+        sales:      { tag: 'Sales Call', title: 'Schedule Sales Call', sub: 'Tim kami akan menghubungi kamu dalam 1x24 jam.', plan: '', showMsg: true },
+        explorer:   { tag: 'Solo Explorer', title: 'Mulai Gratis', sub: 'Akses Top 20 Trending dan Genre Matrix tanpa biaya.', plan: 'explorer', showMsg: false },
+        pro:        { tag: 'Market Pro', title: 'Start Pro Trial', sub: '14 hari trial gratis. Tidak perlu kartu kredit.', plan: 'pro', showMsg: false },
+        enterprise: { tag: 'Enterprise', title: 'Contact Sales', sub: 'Ceritakan kebutuhan enterprise bisnis kamu.', plan: 'enterprise', showMsg: true },
+        api:        { tag: 'API Access', title: 'Request API Key', sub: 'Tersedia untuk plan Market Pro ke atas.', plan: 'pro', showMsg: false }
+    };
+
+    function openModal(type) {
+        const cfg = MODAL_CONFIGS[type] || MODAL_CONFIGS.demo;
+        document.getElementById('modal-tag').textContent    = cfg.tag;
+        document.getElementById('modal-title').textContent  = cfg.title;
+        document.getElementById('modal-sub').textContent    = cfg.sub;
+        document.getElementById('form-plan').value          = cfg.plan;
+        document.getElementById('form-msg-group').style.display = cfg.showMsg ? 'block' : 'none';
+        document.getElementById('form-name').value  = '';
+        document.getElementById('form-email').value = '';
+        document.getElementById('form-company').value = '';
+        document.getElementById('form-msg').value   = '';
+        document.getElementById('modal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        document.getElementById('modal').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    function handleModalOverlayClick(e) {
+        if (e.target === document.getElementById('modal')) closeModal();
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    function submitForm() {
+        const name  = document.getElementById('form-name').value.trim();
+        const email = document.getElementById('form-email').value.trim();
+        if (!name || !email) {
+            document.getElementById('form-name').style.borderColor  = name  ? '' : '#ef4444';
+            document.getElementById('form-email').style.borderColor = email ? '' : '#ef4444';
+            return;
+        }
+        closeModal();
+        showToast(`Terima kasih, ${name.split(' ')[0]}! Kami akan menghubungi ${email} segera.`);
+    }
+
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        document.getElementById('toast-msg').textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 5000);
+    }
+
+    // =============================================
+    // SCROLL REVEAL
+    // =============================================
+    function initScrollReveal() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
                 }
             });
-        }
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    }
 
-        document.addEventListener('DOMContentLoaded', init);
+    // =============================================
+    // ACTIVE NAV ON SCROLL
+    // =============================================
+    function initNavScroll() {
+        const sections = ['hero', 'dashboard', 'pricing', 'api-docs'];
+        const navLinks = document.querySelectorAll('.nav-link[data-section]');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    const link = document.querySelector(`.nav-link[data-section="${entry.target.id}"]`);
+                    if (link) link.classList.add('active');
+                }
+            });
+        }, { threshold: 0.3 });
+
+        sections.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) observer.observe(el);
+        });
+
+        // Compact nav on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(5,5,8,0.92)';
+                nav.style.height = '68px';
+            } else {
+                nav.style.background = 'rgba(5,5,8,0.5)';
+                nav.style.height = '80px';
+            }
+        });
+    }
+
+    // =============================================
+    // INIT
+    // =============================================
+    async function init() {
+        document.getElementById('footer-year').textContent = new Date().getFullYear();
+        renderCities();
+        initScrollReveal();
+        initNavScroll();
+        await refreshData();
+        setInterval(refreshData, REFRESH_INTERVAL);
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
