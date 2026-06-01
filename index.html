@@ -8,6 +8,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Midtrans Snap JS (gunakan URL production jika sudah live) -->
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js"
+            data-client-key="Mid-client-SzC2hJV6frpYkrZk"></script>
     <style>
         :root {
             --bg-deep: #050508;
@@ -140,7 +143,7 @@
         .api-code .str { color: #86efac; }
         .code-label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
 
-        /* Modal */
+        /* Waitlist Modal (Bawaan) */
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 24px; }
         .modal-overlay.open { display: flex; animation: fadeIn 0.25s ease; }
         .modal-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: 28px; padding: 48px; max-width: 520px; width: 100%; position: relative; }
@@ -152,7 +155,7 @@
         .form-group { margin-bottom: 18px; }
         .form-group label { display: block; font-size: 12px; font-weight: 700; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
         .form-input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; color: #fff; font-size: 14px; outline: none; transition: 0.3s; font-family: inherit; }
-        .form-input:focus { border-color: var(--primary); background: rgba(139,92,246,0.07); }
+        .form-input:focus { border-color: var(--primary); background: rgba(139, 92, 246, 0.07); }
         .form-input::placeholder { color: var(--text-muted); }
         .form-select { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; color: #fff; font-size: 14px; outline: none; transition: 0.3s; font-family: inherit; cursor: pointer; appearance: none; }
         .form-select:focus { border-color: var(--primary); }
@@ -186,8 +189,107 @@
         .live-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: var(--success); background: rgba(16,185,129,0.1); padding: 4px 10px; border-radius: 100px; }
         .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); animation: pulse 2s infinite; }
 
+        /* Payment Result Modal */
+        .payment-result-box { text-align: center; }
+        .payment-result-box .result-icon { font-size: 56px; margin-bottom: 16px; display: block; }
+        .payment-result-box h2 { font-size: 24px; font-weight: 800; margin-bottom: 10px; }
+        .payment-result-box p { font-size: 14px; color: var(--text-dim); line-height: 1.8; }
+        .payment-result-box code { font-size: 12px; background: rgba(139,92,246,0.1); padding: 2px 8px; border-radius: 6px; }
+        .payment-result-close { margin-top: 28px; width: 100%; padding: 14px; border-radius: 14px; font-weight: 700; font-size: 15px; cursor: pointer; border: none; background: var(--primary); color: #fff; transition: 0.3s; }
+        .payment-result-close:hover { background: var(--primary-bright); }
+
         /* Footer */
         footer { padding: 80px 0; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 14px; text-align: center; }
+
+        /* ── Feature Lock / Paywall ── */
+        .feature-gated { position: relative; }
+        .feature-lock-overlay {
+            position: absolute; inset: 0;
+            background: rgba(5, 5, 8, 0.82);
+            backdrop-filter: blur(6px);
+            border-radius: inherit;
+            z-index: 10;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            gap: 12px; text-align: center; padding: 24px;
+            border-radius: 24px;
+        }
+        .lock-icon { font-size: 28px; }
+        .lock-plan-badge {
+            font-size: 10px; font-weight: 800; text-transform: uppercase;
+            letter-spacing: 1.5px; color: var(--primary-bright);
+            background: rgba(139, 92, 246, 0.15);
+            padding: 4px 12px; border-radius: 100px;
+        }
+        .lock-title { font-size: 15px; font-weight: 800; color: #fff; margin: 0; }
+        .lock-desc { font-size: 12px; color: var(--text-dim); max-width: 220px; line-height: 1.6; }
+        .lock-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 22px; border-radius: 12px;
+            background: var(--primary); color: #fff;
+            font-size: 13px; font-weight: 700; border: none;
+            cursor: pointer; transition: 0.3s;
+            margin-top: 4px;
+        }
+        .lock-btn:hover { background: var(--primary-bright); transform: translateY(-2px); }
+
+        /* Blur rows beyond 10 in table */
+        .row-locked td { filter: blur(4px); pointer-events: none; user-select: none; opacity: 0.4; }
+        .table-lock-banner {
+            text-align: center; padding: 20px 16px 8px;
+            font-size: 13px; color: var(--text-dim);
+        }
+        .table-lock-banner button {
+            display: inline-flex; align-items: center; gap: 6px;
+            margin-top: 10px; padding: 9px 20px; border-radius: 10px;
+            background: var(--primary); color: #fff;
+            font-size: 12px; font-weight: 700; border: none; cursor: pointer;
+            transition: 0.3s;
+        }
+        .table-lock-banner button:hover { background: var(--primary-bright); }
+
+        /* ── AI Feature Styles ── */
+        .ai-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 800; color: var(--primary-bright); background: rgba(139,92,246,0.12); padding: 3px 9px; border-radius: 100px; text-transform: uppercase; letter-spacing: 1px; }
+        .ai-badge::before { content: '✦'; font-size: 8px; }
+        .ai-section-title { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+        .ai-refresh-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: var(--text-dim); background: transparent; border: 1px solid var(--border); border-radius: 8px; padding: 5px 10px; cursor: pointer; transition: 0.2s; margin-left: auto; }
+        .ai-refresh-btn:hover { color: var(--primary-bright); border-color: var(--primary); }
+
+        /* Market Brief */
+        .brief-mood { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 100px; text-transform: uppercase; }
+        .mood-bullish { background: rgba(16,185,129,0.12); color: var(--success); }
+        .mood-neutral  { background: rgba(148,163,184,0.12); color: var(--text-dim); }
+        .mood-bearish  { background: rgba(239,68,68,0.12); color: #ef4444; }
+        .brief-headline { font-size: 17px; font-weight: 800; margin: 14px 0 10px; line-height: 1.3; }
+        .brief-summary  { font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+        .brief-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+        .brief-box { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 14px; padding: 14px; }
+        .brief-box-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+        .brief-box-text  { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
+        .opp-label  { color: var(--success); }
+        .warn-label { color: #f59e0b; }
+        .brief-loading { text-align: center; padding: 32px; color: var(--text-dim); font-size: 13px; }
+
+        /* Breakout Detector */
+        .breakout-item { background: rgba(139,92,246,0.04); border: 1px solid rgba(139,92,246,0.2); border-radius: 18px; padding: 20px; margin-bottom: 14px; transition: 0.3s; }
+        .breakout-item:hover { border-color: var(--primary); background: rgba(139,92,246,0.08); }
+        .breakout-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px; }
+        .breakout-title { font-weight: 800; font-size: 14px; }
+        .confidence-badge { font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 100px; text-transform: uppercase; }
+        .conf-high   { background: rgba(139,92,246,0.15); color: var(--primary-bright); }
+        .conf-medium { background: rgba(6,182,212,0.12); color: var(--secondary); }
+        .breakout-timeframe { font-size: 11px; color: var(--accent); font-weight: 700; margin-bottom: 6px; }
+        .breakout-signal { font-size: 12px; color: var(--text-dim); margin-bottom: 10px; line-height: 1.5; }
+        .breakout-action { font-size: 12px; background: rgba(255,255,255,0.04); border-radius: 10px; padding: 10px 12px; color: var(--text-main); border-left: 3px solid var(--primary); }
+
+        /* City AI Intelligence */
+        .city-ai-panel { margin-top: 16px; padding: 16px; background: rgba(139,92,246,0.05); border: 1px solid rgba(139,92,246,0.2); border-radius: 16px; }
+        .city-ai-row { display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px; gap: 12px; }
+        .city-ai-label { font-size: 10px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; flex-shrink: 0; }
+        .city-ai-value { font-size: 12px; color: var(--text-dim); text-align: right; line-height: 1.5; }
+        .city-ai-value.highlight { color: var(--primary-bright); font-weight: 700; }
+        .city-ai-strategy { font-size: 12px; color: var(--text-dim); background: rgba(255,255,255,0.03); padding: 10px 12px; border-radius: 10px; line-height: 1.6; margin-top: 8px; }
+        .ai-loading-sm { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-muted); padding: 12px 0; }
 
         /* Mobile */
         @media (max-width: 1024px) {
@@ -197,11 +299,66 @@
             .nav-links { display: none; }
             .api-grid { grid-template-columns: 1fr; }
         }
+
+        /* --- AMII PREMIUM DETAIL MODAL (BARU) --- */
+        .anime-modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 5, 8, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 9999; opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .anime-modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            width: 90%; max-width: 750px;
+            max-height: 85vh; overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+        .anime-modal-overlay.active .modal-content { transform: translateY(0); }
+        .modal-banner {
+            width: 100%; height: 180px;
+            background-size: cover; background-position: center;
+            position: relative; border-top-left-radius: 15px; border-top-right-radius: 15px;
+        }
+        .modal-banner::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to top, var(--bg-card), transparent);
+        }
+        .modal-body { padding: 0 28px 28px 28px; position: relative; margin-top: -60px; }
+        .modal-header-flex { display: flex; gap: 20px; align-items: flex-end; margin-bottom: 24px; }
+        .modal-poster {
+            width: 110px; height: 160px; object-fit: cover;
+            border-radius: 8px; border: 2px solid var(--border);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3); z-index: 2;
+        }
+        .modal-title-area { flex-grow: 1; z-index: 2; padding-bottom: 5px; }
+        .modal-close-btn {
+            position: absolute; top: 20px; right: 20px;
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+            color: var(--text-main); font-size: 18px; cursor: pointer;
+            width: 36px; height: 36px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; z-index: 10;
+            transition: 0.2s;
+        }
+        .modal-close-btn:hover { background: rgba(255,255,255,0.15); color: var(--accent); }
+        .b2b-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 20px 0; }
+        .b2b-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; text-align: center; }
+        .b2b-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .b2b-value { font-size: 14px; font-weight: 700; color: var(--text-main); }
+        .modal-desc { color: var(--text-dim); font-size: 14px; line-height: 1.6; margin-top: 15px; text-align: justify; }
+        tr.clickable-row { cursor: pointer; transition: background 0.2s; }
+        tr.clickable-row:hover { background: rgba(255, 255, 255, 0.02); }
     </style>
 </head>
 <body>
 
-    <!-- ========== MODAL ========== -->
     <div class="modal-overlay" id="modal" onclick="handleModalOverlayClick(event)">
         <div class="modal-box">
             <button class="modal-close" onclick="closeModal()">✕</button>
@@ -238,13 +395,11 @@
         </div>
     </div>
 
-    <!-- ========== TOAST ========== -->
     <div class="toast" id="toast">
         <div class="toast-icon">✓</div>
         <span id="toast-msg">Berhasil dikirim! Kami akan segera menghubungi kamu.</span>
     </div>
 
-    <!-- ========== NAV ========== -->
     <nav id="navbar">
         <div class="container nav-inner">
             <a href="#hero" class="logo">
@@ -263,13 +418,16 @@
                 <a href="#pricing" class="nav-link" data-section="pricing">Pricing</a>
                 <a href="#api-docs" class="nav-link" data-section="api-docs">API Docs</a>
             </div>
-            <div class="nav-actions">
-                <button class="btn btn-primary" onclick="openModal('demo')">Try Demo</button>
+            <div class="nav-actions" style="display:flex;align-items:center;gap:12px;">
+                <div id="pro-user-badge" style="display:none;align-items:center;gap:10px;">
+                    <span style="font-size:12px;font-weight:700;color:var(--primary-bright);background:rgba(139,92,246,0.15);padding:6px 14px;border-radius:100px;">✦ Market Pro</span>
+                    <button onclick="logoutPro()" style="font-size:12px;font-weight:700;color:var(--text-dim);background:transparent;border:1px solid var(--border);padding:6px 14px;border-radius:100px;cursor:pointer;transition:0.2s;" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,255,255,0.3)'" onmouseout="this.style.color='var(--text-dim)';this.style.borderColor='var(--border)'">Logout</button>
+                </div>
+                <button id="try-demo-btn" class="btn btn-primary" onclick="openModal('demo')">Try Demo</button>
             </div>
         </div>
     </nav>
 
-    <!-- ========== HERO ========== -->
     <section id="hero">
         <div class="container">
             <div class="hero-content">
@@ -282,7 +440,6 @@
                 </div>
             </div>
 
-            <!-- ========== DASHBOARD ========== -->
             <div class="dashboard-ui" id="dashboard">
                 <div class="kpi-row">
                     <div class="kpi-card reveal">
@@ -302,7 +459,7 @@
                     </div>
                     <div class="kpi-card reveal reveal-delay-3">
                         <div class="kpi-label">Data Source</div>
-                        <div class="kpi-value" style="font-size: 18px;" id="kpi-source">AniList</div>
+                        <div class="kpi-value" style="font-size: 18px;" id="kpi-source">Laragon PHP</div>
                         <div class="kpi-trend" id="kpi-lastsync" style="color: var(--text-dim)">Syncing...</div>
                     </div>
                 </div>
@@ -342,10 +499,36 @@
                                 <canvas id="genreChart"></canvas>
                             </div>
                         </div>
+
+                        <div class="section-card reveal feature-gated" style="border-color: rgba(139,92,246,0.25);">
+                            <div class="feature-lock-overlay">
+                                <div class="lock-icon">🤖</div>
+                                <span class="lock-plan-badge">Market Pro</span>
+                                <p class="lock-title">AI Breakout Detector</p>
+                                <p class="lock-desc">Prediksi judul viral 1–2 minggu ke depan. Tersedia di paket Market Pro.</p>
+                                <button class="lock-btn" onclick="openModal('pro')">🔓 Upgrade ke Pro</button>
+                            </div>
+                            <div class="ai-section-title">
+                                <h3>AI Breakout Detector</h3>
+                                <span class="ai-badge">AI</span>
+                                <button class="ai-refresh-btn" onclick="runBreakoutDetector()">↻ Refresh</button>
+                            </div>
+                            <p style="font-size:12px;color:var(--text-dim);margin-bottom:20px;">Prediksi judul yang akan viral di Indonesia dalam 1-2 minggu ke depan.</p>
+                            <div id="ai-breakout-content">
+                                <div class="brief-loading"><div class="api-loader"></div>Menunggu data...</div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="right-col">
-                        <div class="section-card reveal">
+                        <div class="section-card reveal feature-gated">
+                            <div class="feature-lock-overlay">
+                                <div class="lock-icon">🗺️</div>
+                                <span class="lock-plan-badge">Market Pro</span>
+                                <p class="lock-title">Regional Hype Map</p>
+                                <p class="lock-desc">Lihat data hype per kota di Indonesia. Tersedia di paket Market Pro.</p>
+                                <button class="lock-btn" onclick="openModal('pro')">🔓 Upgrade ke Pro</button>
+                            </div>
                             <h3>Regional Hype Map</h3>
                             <p style="font-size: 12px; margin: 12px 0 20px; color:var(--text-dim);">Klik kota untuk lihat detail & judul populer.</p>
                             <div class="heat-grid" id="cityList"></div>
@@ -353,6 +536,15 @@
                                 <h4 id="cityName" style="color: var(--secondary)"></h4>
                                 <p id="cityInfo" style="font-size: 13px; margin-top: 8px; color:var(--text-dim);"></p>
                                 <div class="city-top-titles" id="cityTopTitles"></div>
+                                <div id="city-ai-insight" style="margin-top:16px; display:none;">
+                                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+                                        <span style="font-size:12px;font-weight:700;color:var(--text-dim);">AI Intelligence</span>
+                                        <span class="ai-badge">AI</span>
+                                    </div>
+                                    <div id="city-ai-content">
+                                        <div class="ai-loading-sm"><div class="api-loader"></div>Menganalisis kota...</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -364,9 +556,27 @@
                         <div class="section-card reveal" style="background: rgba(16, 185, 129, 0.05); border-color: var(--success)">
                             <div style="display: flex; align-items: center; gap: 12px;">
                                 <div class="engine-pulse"></div>
-                                <h3 style="font-size: 14px;">AniList API Engine Active</h3>
+                                <h3 style="font-size: 14px;">Local PHP API Connected</h3>
                             </div>
-                            <p id="engine-status" style="font-size: 12px; margin-top: 8px;">Connecting to AniList API...</p>
+                            <p id="engine-status" style="font-size: 12px; margin-top: 8px;">Connecting to Laragon API...</p>
+                        </div>
+
+                        <div class="section-card reveal feature-gated" style="border-color: rgba(139,92,246,0.25);">
+                            <div class="feature-lock-overlay">
+                                <div class="lock-icon">📊</div>
+                                <span class="lock-plan-badge">Market Pro</span>
+                                <p class="lock-title">AI Market Brief</p>
+                                <p class="lock-desc">Ringkasan pasar anime harian dari AI. Tersedia di paket Market Pro.</p>
+                                <button class="lock-btn" onclick="openModal('pro')">🔓 Upgrade ke Pro</button>
+                            </div>
+                            <div class="ai-section-title">
+                                <h3>AI Market Brief</h3>
+                                <span class="ai-badge">AI</span>
+                                <button class="ai-refresh-btn" onclick="runAIBrief()">↻ Refresh</button>
+                            </div>
+                            <div id="ai-brief-content">
+                                <div class="brief-loading"><div class="api-loader"></div>Menunggu data...</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -374,7 +584,6 @@
         </div>
     </section>
 
-    <!-- ========== PRICING ========== -->
     <section id="pricing" class="pricing-section">
         <div class="container">
             <h2 class="reveal">Scalable intelligence packages</h2>
@@ -384,7 +593,7 @@
                     <h4>Solo Explorer</h4>
                     <div class="price-amt">Rp0<span>/mo</span></div>
                     <ul class="price-features">
-                        <li>Top 20 Trending List</li>
+                        <li>Top 10 Trending List</li>
                         <li>Basic Genre Distribution</li>
                         <li>24h Delayed Data</li>
                         <li>Single Hub Access</li>
@@ -418,7 +627,6 @@
         </div>
     </section>
 
-    <!-- ========== API DOCS ========== -->
     <section id="api-docs">
         <div class="container">
             <div class="api-hero reveal">
@@ -430,25 +638,19 @@
                     <div class="api-card reveal">
                         <span class="api-method method-get">GET</span>
                         <div style="font-weight:700;font-size:15px;">Trending Titles</div>
-                        <div class="api-endpoint">https://api.amii.ai/v1/trending?limit=10&amp;region=ID</div>
+                        <div class="api-endpoint">http://localhost/Saas-Anime-main/api/trending.php</div>
                         <div class="api-desc">Mengembalikan daftar anime trending di Indonesia berdasarkan volume percakapan real-time, sentiment score, dan movement signal.</div>
                     </div>
                     <div class="api-card reveal" style="margin-top:16px;">
-                        <span class="api-method method-get">GET</span>
-                        <div style="font-weight:700;font-size:15px;">Regional Hype Score</div>
-                        <div class="api-endpoint">https://api.amii.ai/v1/regional?city=jakarta</div>
-                        <div class="api-desc">City-level demand index per judul. Mendukung: Jakarta, Bandung, Surabaya, Yogyakarta, Medan, Makassar.</div>
-                    </div>
-                    <div class="api-card reveal" style="margin-top:16px;">
                         <span class="api-method method-post">POST</span>
-                        <div style="font-weight:700;font-size:15px;">Breakout Alert Webhook</div>
-                        <div class="api-endpoint">https://api.amii.ai/v1/webhooks/alerts</div>
-                        <div class="api-desc">Daftarkan endpoint kamu untuk menerima push notification saat judul baru masuk threshold breakout.</div>
+                        <div style="font-weight:700;font-size:15px;">Waitlist Submission</div>
+                        <div class="api-endpoint">http://localhost/Saas-Anime-main/api/waitlist.php</div>
+                        <div class="api-desc">Menyimpan data pendaftar baru dari form Waitlist ke database MySQL melalui API lokal.</div>
                     </div>
                 </div>
                 <div>
                     <div class="api-code reveal">
-                        <div class="code-label">Contoh Response — GET /v1/trending</div>
+                        <div class="code-label">Contoh Response — GET /api/trending.php</div>
                         <pre id="api-code-preview">Loading live data...</pre>
                     </div>
                     <div style="margin-top:16px;">
@@ -461,17 +663,16 @@
         </div>
     </section>
 
-    <!-- ========== FOOTER ========== -->
     <footer>
         <div class="container">
             <p>&copy; <span id="footer-year"></span> Anime Market Insight Indonesia. The first Indonesian B2B vertical intelligence platform.</p>
-            <p style="margin-top: 12px; font-size: 12px; color: var(--text-muted)">Powered by AniList API · Built for the Indonesia anime market</p>
+            <p style="margin-top: 12px; font-size: 12px; color: var(--text-muted)">Powered by Local Laragon PHP Server · Built for the Indonesia anime market</p>
         </div>
     </footer>
 
     <script>
     // =============================================
-    // AMII.AI — Full Live Engine
+    // AMII.AI — Full Live Engine Connected to PHP
     // =============================================
 
     const REFRESH_INTERVAL = 5 * 60 * 1000;
@@ -480,24 +681,166 @@
     let sortState = { col: 'rank', dir: 'asc' };
 
     const FALLBACK_ANIME = [
-        { title: "Oshi no Ko S2",         volume: 1200000, sentiment: 88, movement: "▲", genres: ["Drama","Music"], trending: 1800 },
-        { title: "Monster #8",             volume: 950000,  sentiment: 82, movement: "▲", genres: ["Action","Sci-Fi"], trending: 1600 },
-        { title: "Demon Slayer: Training", volume: 880000,  sentiment: 94, movement: "▼", genres: ["Action","Fantasy"], trending: 1400 },
-        { title: "Mushoku Tensei II",      volume: 720000,  sentiment: 75, movement: "▲", genres: ["Isekai","Fantasy"], trending: 1200 },
-        { title: "Blue Lock Movie",        volume: 680000,  sentiment: 85, movement: "▲", genres: ["Sports","Action"], trending: 1100 },
-        { title: "Wind Breaker",           volume: 540000,  sentiment: 81, movement: "▲", genres: ["Action","Sports"], trending: 900 },
-        { title: "Solo Leveling",          volume: 510000,  sentiment: 89, movement: "▼", genres: ["Action","Fantasy"], trending: 800 },
-        { title: "Frieren",                volume: 490000,  sentiment: 96, movement: "▼", genres: ["Fantasy","Adventure"], trending: 750 }
+        { title: "Oshi no Ko S2", image_url: "", volume: 1200000, sentiment: 88, movement: "▲", genres: ["Drama","Music"], trending: 1800 },
+        { title: "Monster #8", image_url: "", volume: 950000, sentiment: 82, movement: "▲", genres: ["Action","Sci-Fi"], trending: 1600 },
+        { title: "Demon Slayer: Training", image_url: "", volume: 880000, sentiment: 94, movement: "▼", genres: ["Action","Fantasy"], trending: 1400 },
+        { title: "Mushoku Tensei II", image_url: "", volume: 720000, sentiment: 75, movement: "▲", genres: ["Isekai","Fantasy"], trending: 1200 },
+        { title: "Blue Lock Movie", image_url: "", volume: 680000, sentiment: 85, movement: "▲", genres: ["Sports","Action"], trending: 1100 }
     ];
 
-    const CITIES = [
-        { name: "Jakarta",    val: 98, info: "Hub untuk merch premium & limited edition. Fan spending power tertinggi di Indonesia.", weight: 1.0 },
-        { name: "Bandung",    val: 85, info: "Demografi art-focused. Minat tinggi pada kolaborasi kreatif & fanart.", weight: 0.87 },
-        { name: "Surabaya",   val: 78, info: "Core battle-shonen yang kuat. Cocok untuk cross-promotion gaming.", weight: 0.80 },
-        { name: "Yogyakarta", val: 92, info: "Community engagement organik sangat tinggi. Ideal untuk fan-event & pop-up.", weight: 0.94 },
-        { name: "Medan",      val: 62, info: "Fokus mainstream shonen. Pasar emerging untuk retail chain.", weight: 0.63 },
-        { name: "Makassar",   val: 58, info: "Pertumbuhan stabil. Fokus pada judul mainstream yang sudah establish.", weight: 0.59 }
-    ];
+    // =============================================
+    // API BASE URL — ganti ke '' jika sudah hosting
+    // =============================================
+    const API_BASE = '';
+
+    async function fetchAIInsight(type, data) {
+        const res = await fetch(`${API_BASE}/api/ai_insight.php`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ type, data })
+        });
+        if (!res.ok) throw new Error(`AI API HTTP ${res.status}`);
+        const json = await res.json();
+        if (json.status !== 'ok') throw new Error(json.message);
+        return json.data;
+    }
+
+    async function loadAllAIFeatures(animeData) {
+        const [alertsRes, briefRes, breakoutRes] = await Promise.allSettled([
+            fetchAIInsight('alerts',   animeData),
+            fetchAIInsight('brief',    animeData),
+            fetchAIInsight('breakout', animeData)
+        ]);
+        if (alertsRes.status   === 'fulfilled') renderAIAlerts(alertsRes.value);
+        if (briefRes.status    === 'fulfilled') renderAIBrief(briefRes.value);
+        else renderAIBriefError(briefRes.reason?.message);
+        if (breakoutRes.status === 'fulfilled') renderBreakoutDetector(breakoutRes.value);
+        else renderBreakoutError(breakoutRes.reason?.message);
+    }
+
+    // 1. AI TREND NARRATIVE
+    function renderAIAlerts(alerts) {
+        if (!Array.isArray(alerts) || alerts.length === 0) return;
+        const list = document.getElementById('alertsList');
+        list.innerHTML = alerts.map(a => `
+            <div class="alert-item">
+                <div style="flex:1;">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                        <div style="font-weight:800;font-size:13px;">${a.title}</div>
+                        <span class="ai-badge">AI</span>
+                    </div>
+                    <div style="font-size:12px;color:var(--text-dim);line-height:1.6;">${a.msg}</div>
+                </div>
+                <span class="${a.status==='high'?'alert-high':'alert-rising'}" style="margin-left:12px;flex-shrink:0;">${a.status}</span>
+            </div>`).join('');
+    }
+
+    // 2. AI MARKET BRIEF
+    async function runAIBrief() {
+        if (!currentAnimeData.length) return;
+        document.getElementById('ai-brief-content').innerHTML =
+            '<div class="brief-loading"><div class="api-loader"></div>Generating brief...</div>';
+        try { renderAIBrief(await fetchAIInsight('brief', currentAnimeData)); }
+        catch(e) { renderAIBriefError(e.message); }
+    }
+
+    function renderAIBrief(brief) {
+        const el = document.getElementById('ai-brief-content');
+        if (!el || !brief) return;
+        const moodClass = brief.mood==='bullish' ? 'mood-bullish' : brief.mood==='bearish' ? 'mood-bearish' : 'mood-neutral';
+        const moodEmoji = brief.mood==='bullish' ? '📈' : brief.mood==='bearish' ? '📉' : '📊';
+        el.innerHTML = `
+            <div class="brief-mood ${moodClass}">${moodEmoji} ${brief.mood}</div>
+            <div class="brief-headline">${brief.headline}</div>
+            <div class="brief-summary">${brief.summary}</div>
+            <div class="brief-row">
+                <div class="brief-box">
+                    <div class="brief-box-label opp-label">✦ Peluang</div>
+                    <div class="brief-box-text">${brief.opportunity}</div>
+                </div>
+                <div class="brief-box">
+                    <div class="brief-box-label warn-label">⚠ Waspada</div>
+                    <div class="brief-box-text">${brief.warning}</div>
+                </div>
+            </div>
+            <div style="font-size:10px;color:var(--text-muted);margin-top:12px;text-align:right;">
+                Dibuat pukul ${timeNow()} · AMII Intelligence
+            </div>`;
+    }
+
+    function renderAIBriefError(msg) {
+        const el = document.getElementById('ai-brief-content');
+        if (el) el.innerHTML = `<div style="font-size:12px;color:var(--text-muted);padding:16px 0;">
+            ⚠ AI tidak tersedia. Pastikan API key sudah diisi di <code>api/ai_insight.php</code>.
+        </div>`;
+    }
+
+    // 3. AI CITY INTELLIGENCE
+    async function runCityAI(city) {
+        const panel   = document.getElementById('city-ai-insight');
+        const content = document.getElementById('city-ai-content');
+        if (!panel || !content) return;
+        panel.style.display = 'block';
+        content.innerHTML = '<div class="ai-loading-sm"><div class="api-loader"></div>Menganalisis kota...</div>';
+        try {
+            const insight = await fetchAIInsight('city', {
+                city: city.name, val: city.val,
+                trending: currentAnimeData.slice(0, 5)
+            });
+            content.innerHTML = `
+                <div class="city-ai-panel">
+                    <div class="city-ai-row">
+                        <span class="city-ai-label">Profil Fans</span>
+                        <span class="city-ai-value">${insight.profile}</span>
+                    </div>
+                    <div class="city-ai-row">
+                        <span class="city-ai-label">Genre Dominan</span>
+                        <span class="city-ai-value highlight">${insight.top_genre}</span>
+                    </div>
+                    <div class="city-ai-row">
+                        <span class="city-ai-label">Judul Terbaik</span>
+                        <span class="city-ai-value highlight">${insight.best_title}</span>
+                    </div>
+                    <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px;">→ ${insight.reason}</div>
+                    <div class="city-ai-strategy">💡 ${insight.strategy}</div>
+                </div>`;
+        } catch(e) {
+            content.innerHTML = `<div style="font-size:12px;color:var(--text-muted);">AI tidak tersedia: ${e.message}</div>`;
+        }
+    }
+
+    // 4. AI BREAKOUT DETECTOR
+    async function runBreakoutDetector() {
+        if (!currentAnimeData.length) return;
+        document.getElementById('ai-breakout-content').innerHTML =
+            '<div class="brief-loading"><div class="api-loader"></div>Menganalisis sinyal breakout...</div>';
+        try { renderBreakoutDetector(await fetchAIInsight('breakout', currentAnimeData)); }
+        catch(e) { renderBreakoutError(e.message); }
+    }
+
+    function renderBreakoutDetector(breakouts) {
+        const el = document.getElementById('ai-breakout-content');
+        if (!el || !Array.isArray(breakouts)) return;
+        el.innerHTML = breakouts.map(b => `
+            <div class="breakout-item">
+                <div class="breakout-header">
+                    <div class="breakout-title">${b.title}</div>
+                    <span class="confidence-badge ${b.confidence==='high'?'conf-high':'conf-medium'}">
+                        ${b.confidence==='high'?'🔥 High':'📡 Medium'}
+                    </span>
+                </div>
+                <div class="breakout-timeframe">⏱ ${b.timeframe}</div>
+                <div class="breakout-signal">${b.signal}</div>
+                <div class="breakout-action">🎯 ${b.action}</div>
+            </div>`).join('');
+    }
+
+    function renderBreakoutError(msg) {
+        const el = document.getElementById('ai-breakout-content');
+        if (el) el.innerHTML = `<div style="font-size:12px;color:var(--text-muted);padding:16px 0;">
+            ⚠ AI tidak tersedia. Pastikan API key sudah diisi di <code>api/ai_insight.php</code>.
+        </div>`;
+    }
 
     // =============================================
     // HELPERS
@@ -512,41 +855,8 @@
         return new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
     }
 
-    // =============================================
-    // ANILIST API
-    // =============================================
-    async function fetchAniListTrending() {
-        const query = `{
-            Page(page: 1, perPage: 10) {
-                media(sort: TRENDING_DESC, type: ANIME, status: RELEASING) {
-                    id title { romaji english } trending popularity averageScore genres
-                }
-            }
-        }`;
-        const res = await fetch('https://graphql.anilist.co', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ query })
-        });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const json = await res.json();
-        if (json.errors) throw new Error(json.errors[0].message);
-        return json.data.Page.media;
-    }
-
-    function mapToAnimeData(media) {
-        const avgTrending = media.reduce((s, m) => s + (m.trending || 0), 0) / media.length;
-        return media.map(item => ({
-            title:    item.title.romaji || item.title.english || 'Unknown',
-            volume:   item.popularity || 0,
-            sentiment: item.averageScore || 75,
-            movement: (item.trending || 0) >= avgTrending ? '▲' : '▼',
-            genres:   item.genres || [],
-            trending: item.trending || 0
-        }));
-    }
-
     function computeKPIs(data) {
+        if (!data || data.length === 0) return { totalPop: 0, avgScore: 0, breakouts: 0 };
         const totalPop = data.reduce((s, m) => s + (m.volume || 0), 0);
         const avgScore = (data.reduce((s, m) => s + (m.sentiment || 0), 0) / data.length).toFixed(1);
         const breakouts = data.filter(m => m.trending > 500).length;
@@ -587,11 +897,25 @@
     function renderTable(data) {
         const body = document.getElementById('animeBody');
         body.innerHTML = '';
+        const FREE_LIMIT = 10;
         data.forEach((item, index) => {
+            const imgSource = item.image_url ? item.image_url : 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==';
+            const safeTitle = item.title.replace(/'/g, "\\'");
+            const isLocked = index >= FREE_LIMIT;
+            
             body.innerHTML += `
-                <tr>
+                <tr class="clickable-row ${isLocked ? 'row-locked' : ''}" ${!isLocked ? `onclick="openAnimeDetail('${safeTitle}')" title="Klik untuk melihat detail B2B"` : ''}>
                     <td style="color:var(--text-dim);font-weight:700;">#${index+1}</td>
-                    <td style="font-weight:700;">${item.title}</td>
+                    <td style="font-weight:700;">
+                        <div style="display:flex;align-items:center;gap:14px;">
+                            <div style="width:40px;height:56px;flex-shrink:0;border-radius:6px;overflow:hidden;border:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02);">
+                                <img src="${imgSource}" alt="${item.title}" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
+                            </div>
+                            <span style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">
+                                ${item.title}
+                            </span>
+                        </div>
+                    </td>
                     <td style="color:var(--secondary);font-weight:700;">${formatVolume(item.volume)}</td>
                     <td>
                         <div style="display:flex;align-items:center;gap:10px;">
@@ -602,6 +926,20 @@
                     <td style="color:${item.movement==='▲'?'var(--success)':'#ef4444'};font-weight:800;">${item.movement}</td>
                 </tr>`;
         });
+
+        // Tampilkan banner upgrade jika data lebih dari batas gratis
+        if (data.length > FREE_LIMIT) {
+            body.innerHTML += `
+                <tr>
+                    <td colspan="5">
+                        <div class="table-lock-banner">
+                            🔒 <strong>${data.length - FREE_LIMIT} judul lainnya</strong> tersedia di paket <strong style="color:var(--primary-bright)">Market Pro</strong>
+                            <br>
+                            <button onclick="openModal('pro')">✦ Upgrade ke Market Pro</button>
+                        </div>
+                    </td>
+                </tr>`;
+        }
     }
 
     function filterTable() {
@@ -636,10 +974,41 @@
         renderTable(sorted);
     }
 
-    function renderCities() {
+    // =============================================
+    // REGIONAL DYNAMIC BACKEND MAPS INTEGRATION
+    // =============================================
+    async function fetchCities() {
+        try {
+            const res = await fetch(`${API_BASE}/api/cities.php`);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const json = await res.json();
+            if (json.status !== 'ok') throw new Error(json.message);
+            
+            return json.data.map(city => ({
+                name: city.name,
+                val: parseInt(city.hype_index),
+                info: city.info,
+                weight: parseFloat(city.weight),
+                top_titles: city.top_titles || [],
+                activity_count: parseInt(city.activity_count) || 0
+            }));
+        } catch (err) {
+            console.error('[AMII Map] Gagal memuat data kota dari database:', err.message);
+            return [
+                { name: "Jakarta",    val: 98, info: "Hub untuk merch premium & limited edition. Fan spending power tertinggi di Indonesia.", weight: 1.0 },
+                { name: "Bandung",    val: 85, info: "Demografi art-focused. Minat tinggi pada kolaborasi kreatif & fanart.", weight: 0.87 },
+                { name: "Surabaya",   val: 78, info: "Core battle-shonen yang kuat. Cocok untuk cross-promotion gaming.", weight: 0.80 },
+                { name: "Yogyakarta", val: 92, info: "Community engagement organik sangat tinggi. Ideal untuk fan-event & pop-up.", weight: 0.94 },
+                { name: "Medan",      val: 62, info: "Fokus mainstream shonen. Pasar emerging untuk retail chain.", weight: 0.63 },
+                { name: "Makassar",   val: 58, info: "Pertumbuhan stabil. Fokus pada judul mainstream yang sudah establish.", weight: 0.59 }
+            ];
+        }
+    }
+
+    function renderCities(citiesData) {
         const list = document.getElementById('cityList');
         list.innerHTML = '';
-        CITIES.forEach(city => {
+        citiesData.forEach(city => {
             const div = document.createElement('div');
             div.className = 'city-box';
             div.innerHTML = `<div class="city-name">${city.name}</div><div class="city-val">${city.val}</div>`;
@@ -658,9 +1027,18 @@
         document.getElementById('cityName').innerText = `${city.name} — Hype Index: ${city.val}`;
         document.getElementById('cityInfo').innerText = city.info;
 
-        // Show top 3 titles weighted by city affinity
         const topTitles = document.getElementById('cityTopTitles');
-        if (currentAnimeData.length > 0) {
+
+        // Pakai top_titles dari DB (data real aktivitas user)
+        if (city.top_titles && city.top_titles.length > 0) {
+            topTitles.innerHTML = `<div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Top judul di kota ini</div>` +
+                city.top_titles.map(t => `
+                    <div class="city-title-item">
+                        <span class="city-title-name">${t.anime_title}</span>
+                        <span class="city-title-score">${t.cnt} views</span>
+                    </div>`).join('');
+        } else if (currentAnimeData && currentAnimeData.length > 0) {
+            // Fallback ke kalkulasi lokal jika belum ada data aktivitas
             const weighted = [...currentAnimeData]
                 .map(a => ({ ...a, cityScore: Math.round(a.sentiment * city.weight) }))
                 .sort((a, b) => b.cityScore - a.cityScore)
@@ -674,18 +1052,19 @@
         } else {
             topTitles.innerHTML = '';
         }
-    }
 
-    function renderAlerts(alerts) {
-        const list = document.getElementById('alertsList');
-        list.innerHTML = alerts.map(a => `
-            <div class="alert-item">
-                <div>
-                    <div style="font-weight:700;font-size:13px;">${a.title}</div>
-                    <div style="font-size:11px;color:var(--text-dim);margin-top:4px;">${a.msg}</div>
-                </div>
-                <span class="${a.status==='high'?'alert-high':'alert-rising'}">${a.status}</span>
-            </div>`).join('');
+        // Tampilkan jumlah aktivitas jika ada
+        if (city.activity_count > 0) {
+            const existingBadge = document.getElementById('city-activity-badge');
+            if (existingBadge) existingBadge.remove();
+            const badge = document.createElement('div');
+            badge.id = 'city-activity-badge';
+            badge.style.cssText = 'font-size:11px;color:var(--text-muted);margin-top:8px;';
+            badge.innerHTML = `📊 Berdasarkan ${city.activity_count} aktivitas real user`;
+            topTitles.appendChild(badge);
+        }
+        // Trigger AI City Intelligence
+        runCityAI(city);
     }
 
     function renderGenreChart(genreData) {
@@ -713,6 +1092,7 @@
     }
 
     function updateApiCodePreview(data) {
+        if (!data || data.length === 0) return;
         const sample = data.slice(0, 3);
         const lines = [
             `{`,
@@ -743,7 +1123,7 @@
         document.getElementById('animeBody').innerHTML = `
             <tr><td colspan="5" style="text-align:center;padding:48px;color:var(--text-dim);">
                 <div class="api-loader"></div>
-                <span style="font-size:13px;">Fetching live data dari AniList...</span>
+                <span style="font-size:13px;">Fetching live data dari Laragon PHP...</span>
             </td></tr>`;
     }
 
@@ -751,38 +1131,44 @@
         const el = document.getElementById('engine-status');
         if (!el) return;
         el.innerHTML = success
-            ? `Sync selesai pukul <strong>${timeNow()}</strong>. Sumber: AniList GraphQL API. Auto-refresh setiap 5 menit.`
-            : `<span style="color:#ef4444;">⚠ API error: ${errMsg}. Menampilkan fallback data.</span>`;
+            ? `Sync selesai pukul <strong>${timeNow()}</strong>. Sumber: Backend Laragon PHP API. Auto-refresh setiap 5 menit.`
+            : `<span style="color:#ef4444;">⚠ PHP Server Error: ${errMsg}. Menampilkan data fallback.</span>`;
     }
 
     // =============================================
-    // MAIN REFRESH
+    // MAIN REFRESH (FETCH FROM LOCAL PHP API)
     // =============================================
     async function refreshData() {
         setLoadingState(true);
         try {
-            const media = await fetchAniListTrending();
-            currentAnimeData = mapToAnimeData(media);
+            const res = await fetch(`${API_BASE}/api/trending.php`);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            
+            const json = await res.json();
+            currentAnimeData = json.data; 
+            
             const kpis = computeKPIs(currentAnimeData);
             renderTable(currentAnimeData);
             updateKPIs(kpis);
-            renderAlerts(computeAlerts(currentAnimeData));
+            renderAIAlerts(computeAlerts(currentAnimeData));
             renderGenreChart(computeGenreData(currentAnimeData));
             updateApiCodePreview(currentAnimeData);
             updateEngineStatus(true);
+            loadAllAIFeatures(currentAnimeData);
         } catch (err) {
-            console.error('[AMII] API Error:', err.message);
+            console.error('[AMII] Backend Connection Error:', err.message);
             currentAnimeData = FALLBACK_ANIME;
             renderTable(FALLBACK_ANIME);
-            renderAlerts(computeAlerts(FALLBACK_ANIME));
+            renderAIAlerts(computeAlerts(FALLBACK_ANIME));
             renderGenreChart(computeGenreData(FALLBACK_ANIME));
             updateApiCodePreview(FALLBACK_ANIME);
             updateEngineStatus(false, err.message);
+            loadAllAIFeatures(FALLBACK_ANIME);
         }
     }
 
     // =============================================
-    // MODAL
+    // MODAL WAITLIST (BAWAAN)
     // =============================================
     const MODAL_CONFIGS = {
         demo:       { tag: 'Try Demo', title: 'Coba Dashboard AMII', sub: 'Daftar dan akses demo gratis sekarang.', plan: 'explorer', showMsg: false },
@@ -817,18 +1203,126 @@
         if (e.target === document.getElementById('modal')) closeModal();
     }
 
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+    document.addEventListener('keydown', e => { 
+        if (e.key === 'Escape') {
+            closeModal();
+            closeAnimeModal(null, true);
+        }
+    });
 
+    // =============================================
+    // SUBMIT FORM — dengan Midtrans Payment Flow
+    // =============================================
     function submitForm() {
-        const name  = document.getElementById('form-name').value.trim();
-        const email = document.getElementById('form-email').value.trim();
+        const name    = document.getElementById('form-name').value.trim();
+        const email   = document.getElementById('form-email').value.trim();
+        const company = document.getElementById('form-company').value.trim();
+        const plan    = document.getElementById('form-plan').value;
+        const message = document.getElementById('form-msg').value.trim();
+
+        // Validasi input
         if (!name || !email) {
             document.getElementById('form-name').style.borderColor  = name  ? '' : '#ef4444';
             document.getElementById('form-email').style.borderColor = email ? '' : '#ef4444';
             return;
         }
-        closeModal();
-        showToast(`Terima kasih, ${name.split(' ')[0]}! Kami akan menghubungi ${email} segera.`);
+
+        // Untuk plan gratis / enterprise → pakai waitlist biasa
+        if (plan !== 'pro') {
+            fetch(`${API_BASE}/api/waitlist.php`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, company, plan, message })
+            })
+            .then(res => res.json())
+            .then(data => {
+                closeModal();
+                showToast(data.message || `Terima kasih, ${name.split(' ')[0]}! Berhasil mendaftar.`);
+            })
+            .catch(() => showToast("Gagal terhubung ke server."));
+            return;
+        }
+
+        // ── PLAN PRO → Proses via Midtrans ───────────
+        // Ubah tombol menjadi loading
+        const submitBtn = document.querySelector('.form-submit');
+        const originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="api-loader"></span> Memproses...';
+
+        fetch(`${API_BASE}/api/payment.php`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, company, plan, message })
+        })
+        .then(res => res.json())
+        .then(data => {
+            // Reset tombol
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+
+            if (data.status === 'ok' && data.snap_token) {
+                // Tutup modal form, buka Midtrans Snap popup
+                closeModal();
+                window.snap.pay(data.snap_token, {
+                    onSuccess: function(result) {
+                        showToast(`✅ Pembayaran berhasil! Order ID: ${result.order_id}`);
+                        showPaymentSuccess(name, result.order_id);
+                        localStorage.setItem('amii_user_email', email);
+                        setTimeout(() => handleProCheck(email), 3000);
+                    },
+                    onPending: function(result) {
+                        showToast(`⏳ Menunggu pembayaran. Cek email kamu.`);
+                        showPaymentPending(name, result.order_id);
+                    },
+                    onError: function(result) {
+                        showToast(`❌ Pembayaran gagal. Silakan coba lagi.`);
+                    },
+                    onClose: function() {
+                        showToast(`💡 Pembayaran dibatalkan. Klik Upgrade kapan saja.`);
+                    }
+                });
+            } else if (data.status === 'free') {
+                closeModal();
+                showToast(data.message);
+            } else {
+                showToast('❌ ' + (data.message || 'Gagal membuat transaksi. Coba lagi.'));
+            }
+        })
+        .catch(err => {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+            console.error('[AMII Payment]', err);
+            showToast("Gagal terhubung ke server pembayaran.");
+        });
+    }
+
+    // Modal konfirmasi setelah bayar berhasil
+    function showPaymentSuccess(name, orderId) {
+        const overlay = document.getElementById('payment-result-overlay');
+        document.getElementById('payment-result-icon').textContent  = '🎉';
+        document.getElementById('payment-result-title').textContent = `Selamat, ${name.split(' ')[0]}!`;
+        document.getElementById('payment-result-desc').innerHTML    =
+            `Pembayaran <strong>Market Pro</strong> kamu berhasil.<br>
+             Order ID: <code style="color:var(--primary-bright)">${orderId}</code><br><br>
+             Akses Pro kamu sedang diaktifkan. Cek email untuk konfirmasi.`;
+        overlay.classList.add('open');
+    }
+
+    // Modal konfirmasi setelah bayar pending
+    function showPaymentPending(name, orderId) {
+        const overlay = document.getElementById('payment-result-overlay');
+        document.getElementById('payment-result-icon').textContent  = '⏳';
+        document.getElementById('payment-result-title').textContent = `Hampir selesai, ${name.split(' ')[0]}!`;
+        document.getElementById('payment-result-desc').innerHTML    =
+            `Pembayaran kamu <strong>sedang diproses</strong>.<br>
+             Order ID: <code style="color:var(--primary-bright)">${orderId}</code><br><br>
+             Setelah pembayaran dikonfirmasi, akses Pro akan otomatis aktif. Cek email kamu.`;
+        overlay.classList.add('open');
+    }
+
+    function closePaymentResult() {
+        document.getElementById('payment-result-overlay').classList.remove('open');
     }
 
     function showToast(msg) {
@@ -839,7 +1333,7 @@
     }
 
     // =============================================
-    // SCROLL REVEAL
+    // SCROLL REVEAL & NAV
     // =============================================
     function initScrollReveal() {
         const observer = new IntersectionObserver((entries) => {
@@ -853,9 +1347,6 @@
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     }
 
-    // =============================================
-    // ACTIVE NAV ON SCROLL
-    // =============================================
     function initNavScroll() {
         const sections = ['hero', 'dashboard', 'pricing', 'api-docs'];
         const navLinks = document.querySelectorAll('.nav-link[data-section]');
@@ -875,7 +1366,6 @@
             if (el) observer.observe(el);
         });
 
-        // Compact nav on scroll
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 50) {
@@ -889,18 +1379,212 @@
     }
 
     // =============================================
+    // AMII B2B DETAIL LOGIC (MODAL BARU)
+    // =============================================
+    // Track aktivitas user untuk Regional Hype Map
+    async function trackActivity(animeTitle, actionType = 'view') {
+        try {
+            await fetch(`${API_BASE}/api/track_activity.php`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ anime_title: animeTitle, action_type: actionType })
+            });
+        } catch (e) {
+            // Silent fail — tracking tidak boleh ganggu UX
+        }
+    }
+
+    async function openAnimeDetail(title) {
+        trackActivity(title, 'click'); // Track klik detail anime
+        const modal = document.getElementById('animeModal');
+        
+        // Reset isi tampilan ke mode loading terlebih dahulu
+        document.getElementById('modalTitle').textContent = title;
+        document.getElementById('modalDescription').textContent = "Memuat analisis detail pasar...";
+        document.getElementById('modalGenres').innerHTML = '';
+        document.getElementById('b2bStudio').textContent = '-';
+        document.getElementById('b2bSource').textContent = '-';
+        document.getElementById('b2bEpisodes').textContent = '-';
+        document.getElementById('b2bStatus').textContent = '-';
+        document.getElementById('b2bRating').textContent = '-';
+        document.getElementById('modalBanner').style.backgroundImage = 'none';
+        document.getElementById('modalPoster').src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==';
+
+        // Tampilkan modal overlay detail
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Mengunci scroll body
+
+        // Query GraphQL khusus untuk menarik detail mendalam B2B dari AniList
+        const query = `
+        query ($search: String) {
+          Media (search: $search, type: ANIME) {
+            description
+            bannerImage
+            coverImage { large }
+            status
+            episodes
+            source
+            averageScore
+            genres
+            studios(isMain: true) {
+              nodes { name }
+            }
+          }
+        }`;
+
+        try {
+            const response = await fetch('https://graphql.anilist.co', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify({ query: query, variables: { search: title } })
+            });
+            const json = await response.json();
+            const anime = json.data?.Media;
+
+            if (anime) {
+                // Render gambar banner dan poster
+                if(anime.bannerImage) document.getElementById('modalBanner').style.backgroundImage = `url('${anime.bannerImage}')`;
+                document.getElementById('modalPoster').src = anime.coverImage?.large || '';
+                
+                // Render Deskripsi/Sinopsis (Membersihkan tag html bawaan)
+                document.getElementById('modalDescription').innerHTML = anime.description || 'Tidak ada deskripsi.';
+                
+                // Render Metrik Produksi & B2B Lisensi
+                document.getElementById('b2bStudio').textContent = anime.studios?.nodes[0]?.name || 'Unknown';
+                document.getElementById('b2bSource').textContent = anime.source ? anime.source.replace(/_/g, ' ') : 'Original';
+                document.getElementById('b2bEpisodes').textContent = anime.episodes || 'Ongoing';
+                document.getElementById('b2bStatus').textContent = anime.status ? anime.status.replace(/_/g, ' ') : '-';
+                document.getElementById('b2bRating').textContent = anime.averageScore ? `${anime.averageScore}%` : 'N/A';
+                
+                // Render Badge Genre
+                const genreContainer = document.getElementById('modalGenres');
+                genreContainer.innerHTML = '';
+                anime.genres.slice(0, 4).forEach(g => {
+                    genreContainer.innerHTML += `<span style="font-size:11px; background:rgba(139,92,246,0.15); color:var(--primary-bright); padding:3px 8px; border-radius:4px; font-weight:600;">${g}</span>`;
+                });
+            } else {
+                document.getElementById('modalDescription').textContent = "Gagal memetakan detail anime dari klaster data.";
+            }
+        } catch (error) {
+            console.error(error);
+            document.getElementById('modalDescription').textContent = "Koneksi terputus. Gagal menghubungi data center.";
+        }
+    }
+
+    function closeAnimeModal(event, forced = false) {
+        if (forced || event.target.id === 'animeModal') {
+            document.getElementById('animeModal').classList.remove('active');
+            // Pastikan scroll terbuka lagi, tetapi pastikan modal waitlist tidak sedang terbuka juga
+            if (!document.getElementById('modal').classList.contains('open')) {
+                document.body.style.overflow = ''; 
+            }
+        }
+    }
+    
+    // =============================================
     // INIT
     // =============================================
+    // =============================================
+    // CEK STATUS PRO USER
+    // =============================================
+    async function checkProStatus(email) {
+        try {
+            const res = await fetch(`${API_BASE}/api/check_subscription.php?email=${encodeURIComponent(email)}`);
+            const json = await res.json();
+            return json.is_pro === true;
+        } catch(e) {
+            return false;
+        }
+    }
+
+    function unlockProFeatures() {
+        document.querySelectorAll('.feature-lock-overlay').forEach(el => el.remove());
+        document.querySelectorAll('.row-locked').forEach(el => el.classList.remove('row-locked'));
+        document.querySelectorAll('.table-lock-banner').forEach(el => el.closest('tr')?.remove());
+        // Tampilkan badge Pro & tombol logout di navbar
+        const badge = document.getElementById('pro-user-badge');
+        const demoBtn = document.getElementById('try-demo-btn');
+        if (badge) badge.style.display = 'flex';
+        if (demoBtn) demoBtn.style.display = 'none';
+        if (currentAnimeData.length) loadAllAIFeatures(currentAnimeData);
+        console.log('[AMII] Pro features unlocked!');
+    }
+
+    async function handleProCheck(email) {
+        const isPro = await checkProStatus(email);
+        if (isPro) {
+            unlockProFeatures();
+            showToast('✅ Akses Market Pro aktif!');
+        }
+    }
+
+    function logoutPro() {
+        localStorage.removeItem('amii_user_email');
+        // Sembunyikan badge Pro, tampilkan Try Demo
+        const badge = document.getElementById('pro-user-badge');
+        const demoBtn = document.getElementById('try-demo-btn');
+        if (badge) badge.style.display = 'none';
+        if (demoBtn) demoBtn.style.display = '';
+        showToast('👋 Berhasil logout dari Market Pro.');
+        setTimeout(() => location.reload(), 1500);
+    }
+
     async function init() {
         document.getElementById('footer-year').textContent = new Date().getFullYear();
-        renderCities();
+        
+        const citiesData = await fetchCities();
+        renderCities(citiesData);
+        
         initScrollReveal();
         initNavScroll();
         await refreshData();
+        
         setInterval(refreshData, REFRESH_INTERVAL);
+
+        // Cek jika user sudah Pro sebelumnya
+        const savedEmail = localStorage.getItem('amii_user_email');
+        if (savedEmail) handleProCheck(savedEmail);
     }
 
     document.addEventListener('DOMContentLoaded', init);
     </script>
+
+    <div id="animeModal" class="anime-modal-overlay" onclick="closeAnimeModal(event)">
+        <div class="modal-content">
+            <button class="modal-close-btn" onclick="closeAnimeModal(null, true)">&times;</button>
+            <div id="modalBanner" class="modal-banner"></div>
+            <div class="modal-body">
+                <div class="modal-header-flex">
+                    <img id="modalPoster" class="modal-poster" src="" alt="">
+                    <div class="modal-title-area">
+                        <h2 id="modalTitle" style="margin:0 0 6px 0; font-size:22px; font-weight:800; color:var(--text-main);"></h2>
+                        <div id="modalGenres" style="display:flex; gap:6px; flex-wrap:wrap;"></div>
+                    </div>
+                </div>
+                
+                <h3 style="color:var(--primary-bright); font-size:14px; margin:20px 0 10px 0; border-bottom:1px solid var(--border); padding-bottom:6px;">B2B MARKET & PRODUCTION METRICS</h3>
+                <div class="b2b-grid">
+                    <div class="b2b-card"><div class="b2b-label">Studio</div><div id="b2bStudio" class="b2b-value">-</div></div>
+                    <div class="b2b-card"><div class="b2b-label">Source Material</div><div id="b2bSource" class="b2b-value">-</div></div>
+                    <div class="b2b-card"><div class="b2b-label">Episodes</div><div id="b2bEpisodes" class="b2b-value">-</div></div>
+                    <div class="b2b-card"><div class="b2b-label">Status</div><div id="b2bStatus" class="b2b-value">-</div></div>
+                    <div class="b2b-card"><div class="b2b-label">Avg Rating</div><div id="b2bRating" class="b2b-value" style="color:var(--secondary);">-</div></div>
+                </div>
+
+                <h3 style="color:var(--primary-bright); font-size:14px; margin:25px 0 10px 0; border-bottom:1px solid var(--border); padding-bottom:6px;">SYNOPSIS / STORYLINE</h3>
+                <div id="modalDescription" class="modal-desc"></div>
+            </div>
+        </div>
+    </div>
+    <!-- ── PAYMENT RESULT MODAL ── -->
+    <div id="payment-result-overlay" class="modal-overlay">
+        <div class="modal-box payment-result-box">
+            <span id="payment-result-icon" class="result-icon">🎉</span>
+            <h2 id="payment-result-title">Pembayaran Berhasil!</h2>
+            <p id="payment-result-desc"></p>
+            <button class="payment-result-close" onclick="closePaymentResult()">Kembali ke Dashboard</button>
+        </div>
+    </div>
+
 </body>
 </html>
