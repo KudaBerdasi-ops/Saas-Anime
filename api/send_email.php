@@ -2,7 +2,8 @@
 define('ADMIN_EMAIL', 'hengkysetiabudi155@gmail.com');
 
 function sendEmail($to, $subject, $html_body) {
-    $api_key = 're_eCPVJiu9_Epf4S3pkPaYmKYu8SaQpHxEG';
+    require_once __DIR__ . '/load_env.php';
+define('GMAIL_USER',   $_ENV['RESEND_API_KEY'] ?? '');
     
     $data = [
         'from'    => 'AMII.AI <onboarding@resend.dev>',

@@ -14,7 +14,8 @@ $data = $body['data'] ?? [];
 // =============================================
 // KONFIGURASI GROQ API
 // =============================================
-define('GROQ_API_KEY', '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');
+require_once __DIR__ . '/load_env.php';
+define('GROQ_API_KEY', $_ENV['GROQ_API_KEY'] ?? '');
 define('GROQ_MODEL',   'llama-3.1-8b-instant'); // Cepat & gratis
 
 // =============================================

@@ -8,10 +8,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200); exit();
 }
 
-define('DB_HOST', 'sql202.infinityfree.com');
-define('DB_USER', 'if0_42066827');
-define('DB_PASS', 'Garudasakti355');
-define('DB_NAME', 'if0_42066827_db_saasanime');
+// Konfigurasi Database untuk Localhost
+define('DB_HOST', 'localhost');
+define('DB_USER', 'root');
+define('DB_PASS', ''); // Password default untuk Laragon/XAMPP adalah kosong
+define('DB_NAME', 'db_saasanime'); // Silakan sesuaikan dengan nama database lokal Anda di phpMyAdmin
 
 function getDB() {
     $pdo = new PDO(

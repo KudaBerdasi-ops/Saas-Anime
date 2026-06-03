@@ -6,7 +6,8 @@
 
 header('Content-Type: application/json');
 
-define('MIDTRANS_SERVER_KEY', 'Mid-server-j4vm7a3h3uiMl4Ly0MDWUXX8');
+require_once __DIR__ . '/load_env.php';
+define('MIDTRANS_SERVER_KEY', $_ENV['MIDTRANS_SERVER_KEY'] ?? '');
 
 $input = json_decode(file_get_contents('php://input'), true);
 

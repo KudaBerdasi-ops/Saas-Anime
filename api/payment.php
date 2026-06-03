@@ -16,7 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 // ── KONFIGURASI MIDTRANS ──────────────────────
 // Ganti dengan key asli kamu dari https://dashboard.midtrans.com
-define('MIDTRANS_SERVER_KEY', 'Mid-server-j4vm7a3h3uiMl4Ly0MDWUXX8');
+require_once __DIR__ . '/load_env.php';
+define('MIDTRANS_SERVER_KEY', $_ENV['MIDTRANS_SERVER_KEY'] ?? '');
 define('MIDTRANS_IS_PRODUCTION', false);
 define('MIDTRANS_IS_SANITIZED', true);
 define('MIDTRANS_IS_3DS', true);
