@@ -6,9 +6,8 @@
     <title>AMII | Anime Market Intelligence Indonesia</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Midtrans Snap JS (gunakan URL production jika sudah live) -->
     <script src="https://app.sandbox.midtrans.com/snap/snap.js"
             data-client-key="Mid-client-SzC2hJV6frpYkrZk"></script>
     <style>
@@ -33,13 +32,11 @@
         body { background-color: var(--bg-deep); color: var(--text-main); font-family: 'Plus Jakarta Sans', sans-serif; line-height: 1.6; overflow-x: hidden; scroll-behavior: smooth; }
         .container { max-width: 1400px; margin: 0 auto; padding: 0 40px; }
 
-        /* Typography */
         h1 { font-size: 72px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; }
         h2 { font-size: 32px; font-weight: 700; letter-spacing: -0.02em; }
         h3 { font-size: 20px; font-weight: 700; }
         .gradient-text { background: linear-gradient(135deg, #fff 30%, var(--primary-bright) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        /* Navigation */
         nav { height: var(--nav-height); position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(5, 5, 8, 0.5); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); display: flex; align-items: center; transition: height 0.3s var(--ease), background 0.3s var(--ease); }
         .nav-inner { width: 100%; display: flex; align-items: center; justify-content: space-between; }
         .logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
@@ -51,21 +48,18 @@
         .nav-link:hover, .nav-link.active { color: #fff; }
         .nav-link.active::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: var(--primary); border-radius: 4px; }
 
-        /* Buttons */
         .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 28px; border-radius: 14px; font-weight: 700; font-size: 15px; cursor: pointer; transition: 0.4s var(--ease); border: none; text-decoration: none; }
         .btn-primary { background: #fff; color: #000; }
         .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255,255,255,0.2); background: #eee; }
         .btn-outline { background: transparent; border: 1px solid var(--border); color: #fff; }
         .btn-outline:hover { background: rgba(255,255,255,0.05); border-color: var(--text-dim); }
 
-        /* Hero */
         #hero { padding: 180px 0 120px; position: relative; }
         #hero::before { content: ''; position: absolute; top: -500px; left: 30%; width: 1000px; height: 1000px; background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 60%); filter: blur(100px); pointer-events: none; }
         .hero-content { max-width: 900px; text-align: left; }
         .hero-tag { font-size: 13px; font-weight: 700; color: var(--primary-bright); text-transform: uppercase; letter-spacing: 4px; margin-bottom: 24px; display: block; }
         .hero-content p { font-size: 20px; color: var(--text-dim); margin: 32px 0 48px; max-width: 600px; }
 
-        /* Dashboard View */
         .dashboard-ui { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 32px; padding: 40px; margin-top: 80px; box-shadow: 0 40px 100px -20px rgba(0,0,0,0.6); }
         .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 40px; }
         .kpi-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 24px; border-radius: 20px; transition: 0.3s; }
@@ -74,11 +68,9 @@
         .kpi-value { font-size: 32px; font-weight: 800; letter-spacing: -1px; }
         .kpi-trend { font-size: 12px; font-weight: 700; color: var(--success); margin-top: 8px; display: flex; align-items: center; gap: 4px; }
 
-        /* Content Grid */
         .content-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 32px; }
         .section-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 24px; padding: 32px; margin-bottom: 32px; }
 
-        /* Table */
         .table-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
         .search-box { background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 12px; padding: 10px 16px; display: flex; align-items: center; gap: 12px; width: 300px; }
         .search-box input { background: transparent; border: none; color: #fff; width: 100%; outline: none; font-size: 14px; }
@@ -92,7 +84,6 @@
         .sentiment-bar { height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px; width: 80px; overflow: hidden; }
         .sentiment-fill { height: 100%; background: var(--primary); border-radius: 10px; transition: width 0.6s var(--ease); }
 
-        /* Heatmap Widget */
         .heat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
         .city-box { background: rgba(255,255,255,0.03); padding: 20px; border-radius: 16px; border: 1px solid var(--border); cursor: pointer; transition: 0.3s; }
         .city-box:hover, .city-box.active { border-color: var(--secondary); background: rgba(6, 182, 212, 0.1); transform: translateY(-3px); }
@@ -104,13 +95,11 @@
         .city-title-name { color: var(--text-dim); }
         .city-title-score { color: var(--secondary); font-weight: 700; }
 
-        /* Alerts */
         .alert-item { padding: 16px; border-radius: 16px; border: 1px solid var(--border); background: rgba(255,255,255,0.02); margin-bottom: 12px; display: flex; justify-content: space-between; align-items: start; }
         .alert-item span { font-size: 10px; padding: 4px 10px; border-radius: 100px; font-weight: 800; text-transform: uppercase; }
         .alert-high { background: rgba(139, 92, 246, 0.1); color: var(--primary-bright); }
         .alert-rising { background: rgba(6, 182, 212, 0.1); color: var(--secondary); }
 
-        /* Pricing */
         .pricing-section { padding: 100px 0; text-align: center; }
         .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; margin-top: 60px; }
         .price-card { background: var(--bg-card); padding: 60px 40px; border-radius: 32px; border: 1px solid var(--border); position: relative; transition: 0.4s; }
@@ -124,7 +113,6 @@
         .price-features li { margin-bottom: 16px; color: var(--text-dim); font-size: 14px; display: flex; align-items: center; gap: 12px; }
         .price-features li::before { content: '✦'; color: var(--primary); }
 
-        /* API Docs Section */
         #api-docs { padding: 100px 0; border-top: 1px solid var(--border); }
         .api-hero { max-width: 700px; margin-bottom: 60px; }
         .api-hero p { color: var(--text-dim); margin-top: 16px; font-size: 16px; }
@@ -143,7 +131,6 @@
         .api-code .str { color: #86efac; }
         .code-label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
 
-        /* Waitlist Modal (Bawaan) */
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 24px; }
         .modal-overlay.open { display: flex; animation: fadeIn 0.25s ease; }
         .modal-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: 28px; padding: 48px; max-width: 520px; width: 100%; position: relative; }
@@ -164,32 +151,27 @@
         .form-submit:hover { background: var(--primary-bright); transform: translateY(-2px); }
         .form-note { font-size: 12px; color: var(--text-muted); text-align: center; margin-top: 16px; }
 
-        /* Toast */
         .toast { position: fixed; bottom: 32px; right: 32px; background: var(--bg-card); border: 1px solid var(--success); border-radius: 16px; padding: 18px 24px; z-index: 3000; display: none; align-items: center; gap: 12px; font-size: 14px; font-weight: 600; box-shadow: 0 8px 30px rgba(0,0,0,0.4); animation: slideUp 0.4s var(--ease); }
         .toast.show { display: flex; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .toast-icon { width: 28px; height: 28px; background: rgba(16,185,129,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--success); font-size: 14px; }
 
-        /* Scroll Reveal */
         .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
         .reveal.visible { opacity: 1; transform: translateY(0); }
         .reveal-delay-1 { transition-delay: 0.1s; }
         .reveal-delay-2 { transition-delay: 0.2s; }
         .reveal-delay-3 { transition-delay: 0.3s; }
 
-        /* Progress Dots for engine */
         .engine-pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--success); position: relative; }
         .engine-pulse::after { content: ''; position: absolute; width: 100%; height: 100%; background: inherit; border-radius: inherit; animation: pulse 2s infinite; }
         @keyframes pulse { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(3); opacity: 0; } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Loader */
         .api-loader { display: inline-block; width: 18px; height: 18px; border: 2px solid var(--primary); border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 8px; }
         .live-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: var(--success); background: rgba(16,185,129,0.1); padding: 4px 10px; border-radius: 100px; }
         .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); animation: pulse 2s infinite; }
 
-        /* Payment Result Modal */
         .payment-result-box { text-align: center; }
         .payment-result-box .result-icon { font-size: 56px; margin-bottom: 16px; display: block; }
         .payment-result-box h2 { font-size: 24px; font-weight: 800; margin-bottom: 10px; }
@@ -198,10 +180,8 @@
         .payment-result-close { margin-top: 28px; width: 100%; padding: 14px; border-radius: 14px; font-weight: 700; font-size: 15px; cursor: pointer; border: none; background: var(--primary); color: #fff; transition: 0.3s; }
         .payment-result-close:hover { background: var(--primary-bright); }
 
-        /* Footer */
         footer { padding: 80px 0; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 14px; text-align: center; }
 
-        /* ── Feature Lock / Paywall ── */
         .feature-gated { position: relative; }
         .feature-lock-overlay {
             position: absolute; inset: 0;
@@ -233,7 +213,6 @@
         }
         .lock-btn:hover { background: var(--primary-bright); transform: translateY(-2px); }
 
-        /* Blur rows beyond 10 in table */
         .row-locked td { filter: blur(4px); pointer-events: none; user-select: none; opacity: 0.4; }
         .table-lock-banner {
             text-align: center; padding: 20px 16px 8px;
@@ -248,14 +227,12 @@
         }
         .table-lock-banner button:hover { background: var(--primary-bright); }
 
-        /* ── AI Feature Styles ── */
         .ai-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 800; color: var(--primary-bright); background: rgba(139,92,246,0.12); padding: 3px 9px; border-radius: 100px; text-transform: uppercase; letter-spacing: 1px; }
         .ai-badge::before { content: '✦'; font-size: 8px; }
         .ai-section-title { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
         .ai-refresh-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: var(--text-dim); background: transparent; border: 1px solid var(--border); border-radius: 8px; padding: 5px 10px; cursor: pointer; transition: 0.2s; margin-left: auto; }
         .ai-refresh-btn:hover { color: var(--primary-bright); border-color: var(--primary); }
 
-        /* Market Brief */
         .brief-mood { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 100px; text-transform: uppercase; }
         .mood-bullish { background: rgba(16,185,129,0.12); color: var(--success); }
         .mood-neutral  { background: rgba(148,163,184,0.12); color: var(--text-dim); }
@@ -270,7 +247,6 @@
         .warn-label { color: #f59e0b; }
         .brief-loading { text-align: center; padding: 32px; color: var(--text-dim); font-size: 13px; }
 
-        /* Breakout Detector */
         .breakout-item { background: rgba(139,92,246,0.04); border: 1px solid rgba(139,92,246,0.2); border-radius: 18px; padding: 20px; margin-bottom: 14px; transition: 0.3s; }
         .breakout-item:hover { border-color: var(--primary); background: rgba(139,92,246,0.08); }
         .breakout-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px; }
@@ -282,7 +258,6 @@
         .breakout-signal { font-size: 12px; color: var(--text-dim); margin-bottom: 10px; line-height: 1.5; }
         .breakout-action { font-size: 12px; background: rgba(255,255,255,0.04); border-radius: 10px; padding: 10px 12px; color: var(--text-main); border-left: 3px solid var(--primary); }
 
-        /* City AI Intelligence */
         .city-ai-panel { margin-top: 16px; padding: 16px; background: rgba(139,92,246,0.05); border: 1px solid rgba(139,92,246,0.2); border-radius: 16px; }
         .city-ai-row { display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px; gap: 12px; }
         .city-ai-label { font-size: 10px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; flex-shrink: 0; }
@@ -291,7 +266,6 @@
         .city-ai-strategy { font-size: 12px; color: var(--text-dim); background: rgba(255,255,255,0.03); padding: 10px 12px; border-radius: 10px; line-height: 1.6; margin-top: 8px; }
         .ai-loading-sm { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-muted); padding: 12px 0; }
 
-        /* Mobile */
         @media (max-width: 1024px) {
             h1 { font-size: 48px; }
             .kpi-row { grid-template-columns: repeat(2, 1fr); }
@@ -300,7 +274,6 @@
             .api-grid { grid-template-columns: 1fr; }
         }
 
-        /* --- AMII PREMIUM DETAIL MODAL (BARU) --- */
         .anime-modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -521,33 +494,87 @@
                     </div>
 
                     <div class="right-col">
-                        <div class="section-card reveal feature-gated">
+
+                        <div class="section-card reveal feature-gated" id="hype-map-card" style="border-color: rgba(139,92,246,0.25);">
                             <div class="feature-lock-overlay">
                                 <div class="lock-icon">🗺️</div>
                                 <span class="lock-plan-badge">Market Pro</span>
-                                <p class="lock-title">Regional Hype Map</p>
-                                <p class="lock-desc">Lihat data hype per kota di Indonesia. Tersedia di paket Market Pro.</p>
+                                <p class="lock-title">National Hype Map</p>
+                                <p class="lock-desc">Lihat National Hype Index & data per pulau di Indonesia. Tersedia di paket Market Pro.</p>
                                 <button class="lock-btn" onclick="openModal('pro')">🔓 Upgrade ke Pro</button>
                             </div>
-                            <h3>Regional Hype Map</h3>
-                            <p style="font-size: 12px; margin: 12px 0 20px; color:var(--text-dim);">Klik kota untuk lihat detail & judul populer.</p>
-                            <div class="heat-grid" id="cityList"></div>
-                            <div class="detail-panel" id="cityDetail">
-                                <h4 id="cityName" style="color: var(--secondary)"></h4>
-                                <p id="cityInfo" style="font-size: 13px; margin-top: 8px; color:var(--text-dim);"></p>
-                                <div class="city-top-titles" id="cityTopTitles"></div>
-                                <div id="city-ai-insight" style="margin-top:16px; display:none;">
-                                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-                                        <span style="font-size:12px;font-weight:700;color:var(--text-dim);">AI Intelligence</span>
-                                        <span class="ai-badge">AI</span>
+
+                            <div style="margin-bottom:24px;">
+                                <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+                                    <h3>🇮🇩 National Hype Index</h3>
+                                    <span class="live-badge"><span class="live-dot"></span>LIVE</span>
+                                </div>
+                                <div style="background:linear-gradient(135deg,rgba(139,92,246,0.12),rgba(6,182,212,0.08));border:1px solid rgba(139,92,246,0.3);border-radius:20px;padding:24px;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+                                    <div>
+                                        <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Overall Market Score</div>
+                                        <div id="national-score" style="font-size:52px;font-weight:800;letter-spacing:-2px;background:linear-gradient(135deg,#a78bfa,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">—</div>
+                                        <div id="national-score-sub" style="font-size:12px;color:var(--success);font-weight:700;margin-top:4px;"><div class="api-loader" style="width:12px;height:12px;border-width:1.5px;"></div></div>
                                     </div>
-                                    <div id="city-ai-content">
-                                        <div class="ai-loading-sm"><div class="api-loader"></div>Menganalisis kota...</div>
+                                    <div style="text-align:right;">
+                                        <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px;">Berdasarkan data:</div>
+                                        <div style="font-size:11px;color:var(--text-dim);line-height:1.8;">• AniList Trending API<br>• BPS SUSENAS 2023<br>• Koefisien penetrasi internet</div>
+                                    </div>
+                                </div>
+                                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;">
+                                    <div style="background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:14px;padding:14px;">
+                                        <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Retail & Merchandise</div>
+                                        <div style="display:flex;align-items:center;gap:10px;">
+                                            <div style="flex:1;height:5px;background:rgba(255,255,255,0.05);border-radius:10px;overflow:hidden;"><div id="bar-retail" style="width:0%;height:100%;background:var(--primary);border-radius:10px;transition:width 1s ease;"></div></div>
+                                            <span id="val-retail" style="font-size:14px;font-weight:800;color:var(--primary-bright);">—</span>
+                                        </div>
+                                    </div>
+                                    <div style="background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:14px;padding:14px;">
+                                        <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Digital Content</div>
+                                        <div style="display:flex;align-items:center;gap:10px;">
+                                            <div style="flex:1;height:5px;background:rgba(255,255,255,0.05);border-radius:10px;overflow:hidden;"><div id="bar-digital" style="width:0%;height:100%;background:var(--secondary);border-radius:10px;transition:width 1s ease;"></div></div>
+                                            <span id="val-digital" style="font-size:14px;font-weight:800;color:var(--secondary);">—</span>
+                                        </div>
+                                    </div>
+                                    <div style="background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:14px;padding:14px;">
+                                        <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Event & Community</div>
+                                        <div style="display:flex;align-items:center;gap:10px;">
+                                            <div style="flex:1;height:5px;background:rgba(255,255,255,0.05);border-radius:10px;overflow:hidden;"><div id="bar-event" style="width:0%;height:100%;background:var(--accent);border-radius:10px;transition:width 1s ease;"></div></div>
+                                            <span id="val-event" style="font-size:14px;font-weight:800;color:var(--accent);">—</span>
+                                        </div>
+                                    </div>
+                                    <div style="background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:14px;padding:14px;">
+                                        <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Streaming Platform</div>
+                                        <div style="display:flex;align-items:center;gap:10px;">
+                                            <div style="flex:1;height:5px;background:rgba(255,255,255,0.05);border-radius:10px;overflow:hidden;"><div id="bar-streaming" style="width:0%;height:100%;background:var(--success);border-radius:10px;transition:width 1s ease;"></div></div>
+                                            <span id="val-streaming" style="font-size:14px;font-weight:800;color:var(--success);">—</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="border-top:1px solid var(--border);margin-bottom:20px;"></div>
+
+                            <div>
+                                <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+                                    <h3 style="font-size:15px;">Regional per Pulau</h3>
+                                    <span style="font-size:10px;color:var(--success);background:rgba(16,185,129,0.08);padding:3px 8px;border-radius:6px;">AniList × BPS 2023</span>
+                                </div>
+                                <p style="font-size:12px;color:var(--text-dim);margin-bottom:16px;">Klik pulau untuk lihat detail & judul populer.</p>
+                                <div class="heat-grid" id="cityList"></div>
+                                <div class="detail-panel" id="cityDetail">
+                                    <h4 id="cityName" style="color:var(--secondary)"></h4>
+                                    <p id="cityInfo" style="font-size:13px;margin-top:8px;color:var(--text-dim);"></p>
+                                    <div class="city-top-titles" id="cityTopTitles"></div>
+                                    <div id="city-ai-insight" style="margin-top:16px;display:none;">
+                                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+                                            <span style="font-size:12px;font-weight:700;color:var(--text-dim);">AI Intelligence</span>
+                                            <span class="ai-badge">AI</span>
+                                        </div>
+                                        <div id="city-ai-content"><div class="ai-loading-sm"><div class="api-loader"></div>Menganalisis wilayah...</div></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                         <div class="section-card reveal">
                             <h3>Trend Pulse Alerts</h3>
                             <div id="alertsList" style="margin-top: 20px;"></div>
@@ -671,10 +698,6 @@
     </footer>
 
     <script>
-    // =============================================
-    // AMII.AI — Full Live Engine Connected to PHP
-    // =============================================
-
     const REFRESH_INTERVAL = 5 * 60 * 1000;
     let currentAnimeData = [];
     let genreChartInstance = null;
@@ -688,10 +711,25 @@
         { title: "Blue Lock Movie", image_url: "", volume: 680000, sentiment: 85, movement: "▲", genres: ["Sports","Action"], trending: 1100 }
     ];
 
-    // =============================================
-    // API BASE URL — ganti ke '' jika sudah hosting
-    // =============================================
     const API_BASE = '';
+
+    // ── FUNGSI BARU DARI INDEX (1) ──
+    function updateNationalHype(nationalHype) {
+        if (!nationalHype) return;
+        const scoreEl = document.getElementById('national-score');
+        const subEl   = document.getElementById('national-score-sub');
+        if (scoreEl) scoreEl.textContent = nationalHype.score;
+        if (subEl)   subEl.innerHTML = '↑ Real-time · AniList × BPS 2023';
+        const seg = nationalHype.segments;
+        if (!seg) return;
+        ['retail','digital','event','streaming'].forEach(key => {
+            const val = seg[key] || 0;
+            const bar = document.getElementById('bar-' + key);
+            const txt = document.getElementById('val-' + key);
+            if (bar) bar.style.width = val + '%';
+            if (txt) txt.textContent = val;
+        });
+    }
 
     async function fetchAIInsight(type, data) {
         const res = await fetch(`${API_BASE}/api/ai_insight.php`, {
@@ -718,7 +756,6 @@
         else renderBreakoutError(breakoutRes.reason?.message);
     }
 
-    // 1. AI TREND NARRATIVE
     function renderAIAlerts(alerts) {
         if (!Array.isArray(alerts) || alerts.length === 0) return;
         const list = document.getElementById('alertsList');
@@ -735,7 +772,6 @@
             </div>`).join('');
     }
 
-    // 2. AI MARKET BRIEF
     async function runAIBrief() {
         if (!currentAnimeData.length) return;
         document.getElementById('ai-brief-content').innerHTML =
@@ -775,7 +811,6 @@
         </div>`;
     }
 
-    // 3. AI CITY INTELLIGENCE
     async function runCityAI(city) {
         const panel   = document.getElementById('city-ai-insight');
         const content = document.getElementById('city-ai-content');
@@ -809,7 +844,6 @@
         }
     }
 
-    // 4. AI BREAKOUT DETECTOR
     async function runBreakoutDetector() {
         if (!currentAnimeData.length) return;
         document.getElementById('ai-breakout-content').innerHTML =
@@ -842,9 +876,6 @@
         </div>`;
     }
 
-    // =============================================
-    // HELPERS
-    // =============================================
     function formatVolume(num) {
         if (!num) return '—';
         if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
@@ -880,9 +911,6 @@
         }));
     }
 
-    // =============================================
-    // RENDER
-    // =============================================
     function updateKPIs(kpis) {
         const set = (id, val) => { const el = document.getElementById(id); if (el) el.innerHTML = val; };
         set('kpi-conversations', formatVolume(kpis.totalPop));
@@ -902,7 +930,6 @@
             const imgSource = item.image_url ? item.image_url : 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==';
             const safeTitle = item.title.replace(/'/g, "\\'");
             const isLocked = index >= FREE_LIMIT;
-            
             body.innerHTML += `
                 <tr class="clickable-row ${isLocked ? 'row-locked' : ''}" ${!isLocked ? `onclick="openAnimeDetail('${safeTitle}')" title="Klik untuk melihat detail B2B"` : ''}>
                     <td style="color:var(--text-dim);font-weight:700;">#${index+1}</td>
@@ -926,8 +953,6 @@
                     <td style="color:${item.movement==='▲'?'var(--success)':'#ef4444'};font-weight:800;">${item.movement}</td>
                 </tr>`;
         });
-
-        // Tampilkan banner upgrade jika data lebih dari batas gratis
         if (data.length > FREE_LIMIT) {
             body.innerHTML += `
                 <tr>
@@ -947,7 +972,6 @@
         renderTable(currentAnimeData.filter(a => a.title.toLowerCase().includes(q)));
     }
 
-    // Table Sort
     function sortTable(col) {
         if (sortState.col === col) {
             sortState.dir = sortState.dir === 'asc' ? 'desc' : 'asc';
@@ -974,16 +998,12 @@
         renderTable(sorted);
     }
 
-    // =============================================
-    // REGIONAL DYNAMIC BACKEND MAPS INTEGRATION
-    // =============================================
     async function fetchCities() {
         try {
             const res = await fetch(`${API_BASE}/api/cities.php`);
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             const json = await res.json();
             if (json.status !== 'ok') throw new Error(json.message);
-            
             return json.data.map(city => ({
                 name: city.name,
                 val: parseInt(city.hype_index),
@@ -993,14 +1013,15 @@
                 activity_count: parseInt(city.activity_count) || 0
             }));
         } catch (err) {
+            // Updated fallback dari index (1).html
             console.error('[AMII Map] Gagal memuat data kota dari database:', err.message);
             return [
-                { name: "Jakarta",    val: 98, info: "Hub untuk merch premium & limited edition. Fan spending power tertinggi di Indonesia.", weight: 1.0 },
-                { name: "Bandung",    val: 85, info: "Demografi art-focused. Minat tinggi pada kolaborasi kreatif & fanart.", weight: 0.87 },
-                { name: "Surabaya",   val: 78, info: "Core battle-shonen yang kuat. Cocok untuk cross-promotion gaming.", weight: 0.80 },
-                { name: "Yogyakarta", val: 92, info: "Community engagement organik sangat tinggi. Ideal untuk fan-event & pop-up.", weight: 0.94 },
-                { name: "Medan",      val: 62, info: "Fokus mainstream shonen. Pasar emerging untuk retail chain.", weight: 0.63 },
-                { name: "Makassar",   val: 58, info: "Pertumbuhan stabil. Fokus pada judul mainstream yang sudah establish.", weight: 0.59 }
+                {name:"Jawa",val:94,info:"Pusat komunitas anime terbesar di Indonesia. Hub untuk retail merchandise, event cosplay, dan konten kreator. (BPS 2023)",weight:1.0,top_titles:[],activity_count:0},
+                {name:"Sumatra",val:78,info:"Pasar berkembang dengan fokus pada streaming digital dan komunitas online. (BPS 2023)",weight:0.80,top_titles:[],activity_count:0},
+                {name:"Sulawesi",val:70,info:"Community-driven market. Event lokal dan fan club aktif. (BPS 2023)",weight:0.72,top_titles:[],activity_count:0},
+                {name:"Bali & NTT",val:82,info:"Pasar unik dengan pengaruh wisata & ekspat. Minat tinggi pada merchandise premium. (BPS 2023)",weight:0.84,top_titles:[],activity_count:0},
+                {name:"Kalimantan",val:65,info:"Segmen emerging. Dominasi judul mainstream shonen. (BPS 2023)",weight:0.67,top_titles:[],activity_count:0},
+                {name:"Papua & Maluku",val:55,info:"Pasar awal dengan infrastruktur digital yang terus berkembang. (BPS 2023)",weight:0.57,top_titles:[],activity_count:0}
             ];
         }
     }
@@ -1026,10 +1047,7 @@
         panel.style.display = 'block';
         document.getElementById('cityName').innerText = `${city.name} — Hype Index: ${city.val}`;
         document.getElementById('cityInfo').innerText = city.info;
-
         const topTitles = document.getElementById('cityTopTitles');
-
-        // Pakai top_titles dari DB (data real aktivitas user)
         if (city.top_titles && city.top_titles.length > 0) {
             topTitles.innerHTML = `<div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Top judul di kota ini</div>` +
                 city.top_titles.map(t => `
@@ -1038,7 +1056,6 @@
                         <span class="city-title-score">${t.cnt} views</span>
                     </div>`).join('');
         } else if (currentAnimeData && currentAnimeData.length > 0) {
-            // Fallback ke kalkulasi lokal jika belum ada data aktivitas
             const weighted = [...currentAnimeData]
                 .map(a => ({ ...a, cityScore: Math.round(a.sentiment * city.weight) }))
                 .sort((a, b) => b.cityScore - a.cityScore)
@@ -1052,8 +1069,6 @@
         } else {
             topTitles.innerHTML = '';
         }
-
-        // Tampilkan jumlah aktivitas jika ada
         if (city.activity_count > 0) {
             const existingBadge = document.getElementById('city-activity-badge');
             if (existingBadge) existingBadge.remove();
@@ -1063,7 +1078,6 @@
             badge.innerHTML = `📊 Berdasarkan ${city.activity_count} aktivitas real user`;
             topTitles.appendChild(badge);
         }
-        // Trigger AI City Intelligence
         runCityAI(city);
     }
 
@@ -1135,18 +1149,17 @@
             : `<span style="color:#ef4444;">⚠ PHP Server Error: ${errMsg}. Menampilkan data fallback.</span>`;
     }
 
-    // =============================================
-    // MAIN REFRESH (FETCH FROM LOCAL PHP API)
-    // =============================================
     async function refreshData() {
         setLoadingState(true);
         try {
             const res = await fetch(`${API_BASE}/api/trending.php`);
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
-            
             const json = await res.json();
-            currentAnimeData = json.data; 
+            currentAnimeData = json.data;
             
+            // DIPANGGIL UNTUK MENGUPDATE NATIONAL HYPE MAP
+            updateNationalHype(json.national_hype);
+
             const kpis = computeKPIs(currentAnimeData);
             renderTable(currentAnimeData);
             updateKPIs(kpis);
@@ -1167,9 +1180,6 @@
         }
     }
 
-    // =============================================
-    // MODAL WAITLIST (BAWAAN)
-    // =============================================
     const MODAL_CONFIGS = {
         demo:       { tag: 'Try Demo', title: 'Coba Dashboard AMII', sub: 'Daftar dan akses demo gratis sekarang.', plan: 'explorer', showMsg: false },
         sales:      { tag: 'Sales Call', title: 'Schedule Sales Call', sub: 'Tim kami akan menghubungi kamu dalam 1x24 jam.', plan: '', showMsg: true },
@@ -1203,16 +1213,13 @@
         if (e.target === document.getElementById('modal')) closeModal();
     }
 
-    document.addEventListener('keydown', e => { 
+    document.addEventListener('keydown', e => {
         if (e.key === 'Escape') {
             closeModal();
             closeAnimeModal(null, true);
         }
     });
 
-    // =============================================
-    // SUBMIT FORM — dengan Midtrans Payment Flow
-    // =============================================
     function submitForm() {
         const name    = document.getElementById('form-name').value.trim();
         const email   = document.getElementById('form-email').value.trim();
@@ -1220,14 +1227,12 @@
         const plan    = document.getElementById('form-plan').value;
         const message = document.getElementById('form-msg').value.trim();
 
-        // Validasi input
         if (!name || !email) {
             document.getElementById('form-name').style.borderColor  = name  ? '' : '#ef4444';
             document.getElementById('form-email').style.borderColor = email ? '' : '#ef4444';
             return;
         }
 
-        // Untuk plan gratis / enterprise → pakai waitlist biasa
         if (plan !== 'pro') {
             fetch(`${API_BASE}/api/waitlist.php`, {
                 method: 'POST',
@@ -1243,8 +1248,6 @@
             return;
         }
 
-        // ── PLAN PRO → Proses via Midtrans ───────────
-        // Ubah tombol menjadi loading
         const submitBtn = document.querySelector('.form-submit');
         const originalText = submitBtn.textContent;
         submitBtn.disabled = true;
@@ -1257,12 +1260,9 @@
         })
         .then(res => res.json())
         .then(data => {
-            // Reset tombol
             submitBtn.disabled = false;
             submitBtn.textContent = originalText;
-
             if (data.status === 'ok' && data.snap_token) {
-                // Tutup modal form, buka Midtrans Snap popup
                 closeModal();
                 window.snap.pay(data.snap_token, {
                     onSuccess: function(result) {
@@ -1297,7 +1297,6 @@
         });
     }
 
-    // Modal konfirmasi setelah bayar berhasil
     function showPaymentSuccess(name, orderId) {
         const overlay = document.getElementById('payment-result-overlay');
         document.getElementById('payment-result-icon').textContent  = '🎉';
@@ -1309,7 +1308,6 @@
         overlay.classList.add('open');
     }
 
-    // Modal konfirmasi setelah bayar pending
     function showPaymentPending(name, orderId) {
         const overlay = document.getElementById('payment-result-overlay');
         document.getElementById('payment-result-icon').textContent  = '⏳';
@@ -1332,9 +1330,6 @@
         setTimeout(() => toast.classList.remove('show'), 5000);
     }
 
-    // =============================================
-    // SCROLL REVEAL & NAV
-    // =============================================
     function initScrollReveal() {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -1350,7 +1345,6 @@
     function initNavScroll() {
         const sections = ['hero', 'dashboard', 'pricing', 'api-docs'];
         const navLinks = document.querySelectorAll('.nav-link[data-section]');
-
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1360,12 +1354,10 @@
                 }
             });
         }, { threshold: 0.3 });
-
         sections.forEach(id => {
             const el = document.getElementById(id);
             if (el) observer.observe(el);
         });
-
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 50) {
@@ -1378,10 +1370,6 @@
         });
     }
 
-    // =============================================
-    // AMII B2B DETAIL LOGIC (MODAL BARU)
-    // =============================================
-    // Track aktivitas user untuk Regional Hype Map
     async function trackActivity(animeTitle, actionType = 'view') {
         try {
             await fetch(`${API_BASE}/api/track_activity.php`, {
@@ -1389,16 +1377,12 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ anime_title: animeTitle, action_type: actionType })
             });
-        } catch (e) {
-            // Silent fail — tracking tidak boleh ganggu UX
-        }
+        } catch (e) {}
     }
 
     async function openAnimeDetail(title) {
-        trackActivity(title, 'click'); // Track klik detail anime
+        trackActivity(title, 'click');
         const modal = document.getElementById('animeModal');
-        
-        // Reset isi tampilan ke mode loading terlebih dahulu
         document.getElementById('modalTitle').textContent = title;
         document.getElementById('modalDescription').textContent = "Memuat analisis detail pasar...";
         document.getElementById('modalGenres').innerHTML = '';
@@ -1409,12 +1393,9 @@
         document.getElementById('b2bRating').textContent = '-';
         document.getElementById('modalBanner').style.backgroundImage = 'none';
         document.getElementById('modalPoster').src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==';
-
-        // Tampilkan modal overlay detail
         modal.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Mengunci scroll body
+        document.body.style.overflow = 'hidden';
 
-        // Query GraphQL khusus untuk menarik detail mendalam B2B dari AniList
         const query = `
         query ($search: String) {
           Media (search: $search, type: ANIME) {
@@ -1440,23 +1421,15 @@
             });
             const json = await response.json();
             const anime = json.data?.Media;
-
             if (anime) {
-                // Render gambar banner dan poster
                 if(anime.bannerImage) document.getElementById('modalBanner').style.backgroundImage = `url('${anime.bannerImage}')`;
                 document.getElementById('modalPoster').src = anime.coverImage?.large || '';
-                
-                // Render Deskripsi/Sinopsis (Membersihkan tag html bawaan)
                 document.getElementById('modalDescription').innerHTML = anime.description || 'Tidak ada deskripsi.';
-                
-                // Render Metrik Produksi & B2B Lisensi
                 document.getElementById('b2bStudio').textContent = anime.studios?.nodes[0]?.name || 'Unknown';
                 document.getElementById('b2bSource').textContent = anime.source ? anime.source.replace(/_/g, ' ') : 'Original';
                 document.getElementById('b2bEpisodes').textContent = anime.episodes || 'Ongoing';
                 document.getElementById('b2bStatus').textContent = anime.status ? anime.status.replace(/_/g, ' ') : '-';
                 document.getElementById('b2bRating').textContent = anime.averageScore ? `${anime.averageScore}%` : 'N/A';
-                
-                // Render Badge Genre
                 const genreContainer = document.getElementById('modalGenres');
                 genreContainer.innerHTML = '';
                 anime.genres.slice(0, 4).forEach(g => {
@@ -1474,19 +1447,12 @@
     function closeAnimeModal(event, forced = false) {
         if (forced || event.target.id === 'animeModal') {
             document.getElementById('animeModal').classList.remove('active');
-            // Pastikan scroll terbuka lagi, tetapi pastikan modal waitlist tidak sedang terbuka juga
             if (!document.getElementById('modal').classList.contains('open')) {
-                document.body.style.overflow = ''; 
+                document.body.style.overflow = '';
             }
         }
     }
-    
-    // =============================================
-    // INIT
-    // =============================================
-    // =============================================
-    // CEK STATUS PRO USER
-    // =============================================
+
     async function checkProStatus(email) {
         try {
             const res = await fetch(`${API_BASE}/api/check_subscription.php?email=${encodeURIComponent(email)}`);
@@ -1501,7 +1467,6 @@
         document.querySelectorAll('.feature-lock-overlay').forEach(el => el.remove());
         document.querySelectorAll('.row-locked').forEach(el => el.classList.remove('row-locked'));
         document.querySelectorAll('.table-lock-banner').forEach(el => el.closest('tr')?.remove());
-        // Tampilkan badge Pro & tombol logout di navbar
         const badge = document.getElementById('pro-user-badge');
         const demoBtn = document.getElementById('try-demo-btn');
         if (badge) badge.style.display = 'flex';
@@ -1520,7 +1485,6 @@
 
     function logoutPro() {
         localStorage.removeItem('amii_user_email');
-        // Sembunyikan badge Pro, tampilkan Try Demo
         const badge = document.getElementById('pro-user-badge');
         const demoBtn = document.getElementById('try-demo-btn');
         if (badge) badge.style.display = 'none';
@@ -1531,17 +1495,12 @@
 
     async function init() {
         document.getElementById('footer-year').textContent = new Date().getFullYear();
-        
         const citiesData = await fetchCities();
         renderCities(citiesData);
-        
         initScrollReveal();
         initNavScroll();
         await refreshData();
-        
         setInterval(refreshData, REFRESH_INTERVAL);
-
-        // Cek jika user sudah Pro sebelumnya
         const savedEmail = localStorage.getItem('amii_user_email');
         if (savedEmail) handleProCheck(savedEmail);
     }
@@ -1561,8 +1520,7 @@
                         <div id="modalGenres" style="display:flex; gap:6px; flex-wrap:wrap;"></div>
                     </div>
                 </div>
-                
-                <h3 style="color:var(--primary-bright); font-size:14px; margin:20px 0 10px 0; border-bottom:1px solid var(--border); padding-bottom:6px;">B2B MARKET & PRODUCTION METRICS</h3>
+                <h3 style="color:var(--primary-bright); font-size:14px; margin:20px 0 10px 0; border-bottom:1px solid var(--border); padding-bottom:6px;">B2B MARKET &amp; PRODUCTION METRICS</h3>
                 <div class="b2b-grid">
                     <div class="b2b-card"><div class="b2b-label">Studio</div><div id="b2bStudio" class="b2b-value">-</div></div>
                     <div class="b2b-card"><div class="b2b-label">Source Material</div><div id="b2bSource" class="b2b-value">-</div></div>
@@ -1570,13 +1528,12 @@
                     <div class="b2b-card"><div class="b2b-label">Status</div><div id="b2bStatus" class="b2b-value">-</div></div>
                     <div class="b2b-card"><div class="b2b-label">Avg Rating</div><div id="b2bRating" class="b2b-value" style="color:var(--secondary);">-</div></div>
                 </div>
-
                 <h3 style="color:var(--primary-bright); font-size:14px; margin:25px 0 10px 0; border-bottom:1px solid var(--border); padding-bottom:6px;">SYNOPSIS / STORYLINE</h3>
                 <div id="modalDescription" class="modal-desc"></div>
             </div>
         </div>
     </div>
-    <!-- ── PAYMENT RESULT MODAL ── -->
+
     <div id="payment-result-overlay" class="modal-overlay">
         <div class="modal-box payment-result-box">
             <span id="payment-result-icon" class="result-icon">🎉</span>

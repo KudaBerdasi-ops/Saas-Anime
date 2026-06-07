@@ -1,102 +1,55 @@
 <?php
-/**
- * AMII — Cities API (Regional Hype Map)
- * Return hype score per kota berdasarkan aktivitas real user
- *
- * GET /api/cities.php
- * GET /api/cities.php?city=Jakarta  → detail 1 kota + top titles
- */
+// =============================================
+// AMII - Regional Hype Data
+// File: api/cities.php
+// Mengambil data regional yang sudah dihitung
+// oleh trending.php (AniList × BPS 2023)
+// =============================================
 
-require_once 'config.php';
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
 
-try {
-    $pdo  = getDB();
-    $city = $_GET['city'] ?? null;
-
-    if ($city) {
-        // --- Detail 1 kota ---
-        $stmt = $pdo->prepare("
-            SELECT
-                ch.name,
-                ch.hype_index,
-                ch.info,
-                ch.weight,
-                ch.activity_count,
-                ch.top_titles,
-                ch.updated_at,
-                COUNT(DISTINCT ua.user_id) AS unique_users_30d,
-                COUNT(ua.id)              AS total_activity_30d
-            FROM city_hype ch
-            LEFT JOIN user_activity ua
-                ON ua.city = ch.name
-               AND ua.created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)
-            WHERE ch.name = ?
-            GROUP BY ch.id
-        ");
-        $stmt->execute([$city]);
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if (!$row) {
-            http_response_code(404);
-            echo json_encode(['status' => 'error', 'message' => 'City not found']);
-            exit;
-        }
-
-        // Decode top_titles JSON
-        $row['top_titles'] = json_decode($row['top_titles'] ?? '[]', true);
-
-        echo json_encode(['status' => 'ok', 'data' => $row]);
-
-    } else {
-        // --- Semua kota ---
-        // Ambil dari city_hype, enriched dengan activity 30 hari terakhir
-        $stmt = $pdo->query("
-            SELECT
-                ch.name,
-                ch.hype_index,
-                ch.info,
-                ch.weight,
-                ch.activity_count,
-                ch.top_titles,
-                ch.updated_at
-            FROM city_hype ch
-            ORDER BY ch.hype_index DESC
-        ");
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        // Decode top_titles JSON untuk setiap kota
-        foreach ($rows as &$row) {
-            $row['top_titles'] = json_decode($row['top_titles'] ?? '[]', true);
-        }
-
-        // Jika belum ada data aktivitas sama sekali, kembalikan data default
-        // supaya Regional Hype Map tetap tampil
-        if (empty($rows)) {
-            $rows = getDefaultCities();
-        }
-
-        echo json_encode(['status' => 'ok', 'data' => $rows]);
-    }
-
-} catch (Exception $e) {
-    http_response_code(500);
-    echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200); exit();
 }
 
-// ============================================================
-// FALLBACK: data default jika tabel masih kosong
-// ============================================================
-function getDefaultCities(): array {
-    return [
-        ['name' => 'Jakarta',    'hype_index' => 50, 'info' => 'Data sedang dikumpulkan...', 'weight' => 1.0,  'activity_count' => 0, 'top_titles' => []],
-        ['name' => 'Yogyakarta', 'hype_index' => 45, 'info' => 'Data sedang dikumpulkan...', 'weight' => 0.94, 'activity_count' => 0, 'top_titles' => []],
-        ['name' => 'Bali',       'hype_index' => 40, 'info' => 'Data sedang dikumpulkan...', 'weight' => 0.90, 'activity_count' => 0, 'top_titles' => []],
-        ['name' => 'Bandung',    'hype_index' => 38, 'info' => 'Data sedang dikumpulkan...', 'weight' => 0.87, 'activity_count' => 0, 'top_titles' => []],
-        ['name' => 'Surabaya',   'hype_index' => 35, 'info' => 'Data sedang dikumpulkan...', 'weight' => 0.80, 'activity_count' => 0, 'top_titles' => []],
-        ['name' => 'Medan',      'hype_index' => 28, 'info' => 'Data sedang dikumpulkan...', 'weight' => 0.63, 'activity_count' => 0, 'top_titles' => []],
-        ['name' => 'Makassar',   'hype_index' => 25, 'info' => 'Data sedang dikumpulkan...', 'weight' => 0.59, 'activity_count' => 0, 'top_titles' => []],
-        ['name' => 'Semarang',   'hype_index' => 22, 'info' => 'Data sedang dikumpulkan...', 'weight' => 0.55, 'activity_count' => 0, 'top_titles' => []],
-    ];
+// Panggil trending.php dan ambil bagian regional-nya
+// Ini menghindari duplikasi fetch ke AniList
+$trendingUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http')
+    . '://' . $_SERVER['HTTP_HOST']
+    . str_replace('cities.php', 'trending.php', $_SERVER['REQUEST_URI']);
+
+$ch = curl_init($trendingUrl);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+$response = curl_exec($ch);
+curl_close($ch);
+
+$data = json_decode($response, true);
+
+if (!$data || $data['status'] !== 'ok' || empty($data['regional'])) {
+    // Fallback statis jika trending.php gagal
+    echo json_encode([
+        'status' => 'ok',
+        'source' => 'fallback',
+        'data'   => [
+            ['name'=>'Jawa',          'hype_index'=>94, 'weight'=>1.00, 'info'=>'Pusat komunitas anime terbesar di Indonesia. Hub untuk retail merchandise, event cosplay, dan konten kreator.', 'top_titles'=>[], 'activity_count'=>0],
+            ['name'=>'Sumatra',       'hype_index'=>78, 'weight'=>0.80, 'info'=>'Pasar berkembang dengan fokus pada streaming digital dan komunitas online.', 'top_titles'=>[], 'activity_count'=>0],
+            ['name'=>'Sulawesi',      'hype_index'=>70, 'weight'=>0.72, 'info'=>'Community-driven market. Event lokal dan fan club aktif.', 'top_titles'=>[], 'activity_count'=>0],
+            ['name'=>'Bali & NTT',    'hype_index'=>82, 'weight'=>0.84, 'info'=>'Pasar unik dengan pengaruh wisata & ekspat. Minat tinggi pada merchandise premium.', 'top_titles'=>[], 'activity_count'=>0],
+            ['name'=>'Kalimantan',    'hype_index'=>65, 'weight'=>0.67, 'info'=>'Segmen emerging. Dominasi judul mainstream shonen.', 'top_titles'=>[], 'activity_count'=>0],
+            ['name'=>'Papua & Maluku','hype_index'=>55, 'weight'=>0.57, 'info'=>'Pasar awal dengan infrastruktur digital yang terus berkembang.', 'top_titles'=>[], 'activity_count'=>0],
+        ]
+    ]);
+    exit();
 }
+
+echo json_encode([
+    'status'      => 'ok',
+    'source'      => 'AniList API × BPS SUSENAS 2023',
+    'synced_at'   => $data['synced_at'] ?? date('Y-m-d H:i:s'),
+    'data'        => $data['regional'],
+]);
